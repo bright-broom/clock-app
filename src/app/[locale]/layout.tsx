@@ -5,6 +5,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations } from 'next-intl/server'
 
 import { locales, type Locale } from '@/lib'
+import { getSiteUrl } from '@/lib/site'
 
 import '../globals.css'
 
@@ -20,20 +21,106 @@ type Props = {
   params: { locale: string }
 }
 
+const OG_LOCALE_MAP: Record<Locale, string> = {
+  ja: 'ja_JP',
+  en: 'en_US',
+  es: 'es_ES',
+  pt: 'pt_BR',
+  fr: 'fr_FR',
+  de: 'de_DE',
+  hi: 'hi_IN',
+}
+
+const LOCALE_COUNTRY_LABELS: Record<Locale, string> = {
+  ja: 'Japan',
+  en: 'United States',
+  es: 'Spain',
+  pt: 'Brazil',
+  fr: 'France',
+  de: 'Germany',
+  hi: 'India',
+}
+
 export async function generateMetadata({
   params: { locale },
 }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: 'metadata' })
+  const siteUrl = getSiteUrl()
+  const keywords = t('keywords')
+    .split(',')
+    .map((keyword) => keyword.trim())
+    .filter(Boolean)
+  const currentLocale = locale as Locale
+  const ogLocale = OG_LOCALE_MAP[currentLocale]
+  const alternateLocale = locales
+    .filter((entry) => entry !== currentLocale)
+    .map((entry) => OG_LOCALE_MAP[entry])
+  const languageAlternates = Object.fromEntries(
+    locales.map((entry) => [entry, `/${entry}`])
+  )
+  const googleSiteVerification =
+    process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+  const bingSiteVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+  const verification = {
+    ...(googleSiteVerification ? { google: googleSiteVerification } : {}),
+    ...(bingSiteVerification
+      ? {
+          other: {
+            'msvalidate.01': bingSiteVerification,
+          },
+        }
+      : {}),
+  }
+  const countryLabel = LOCALE_COUNTRY_LABELS[currentLocale]
 
   return {
-    title: t('title'),
+    metadataBase: new URL(siteUrl),
+    applicationName: t('appName'),
+    title: {
+      default: `${t('title')} (${countryLabel})`,
+      template: `%s (${countryLabel})`,
+    },
     description: t('description'),
-    robots: 'index, follow',
+    keywords,
+    alternates: {
+      canonical: `/${locale}`,
+      languages: languageAlternates,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+        'max-video-preview': -1,
+      },
+    },
     openGraph: {
       title: t('title'),
       description: t('description'),
+      url: `/${locale}`,
+      siteName: t('siteName'),
+      locale: ogLocale,
+      alternateLocale,
       type: 'website',
+      images: [
+        {
+          url: '/opengraph-image',
+          width: 1200,
+          height: 630,
+          alt: t('ogImageAlt'),
+        },
+      ],
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: t('title'),
+      description: t('description'),
+      images: ['/opengraph-image'],
+    },
+    verification,
   }
 }
 

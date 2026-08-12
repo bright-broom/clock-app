@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "title": "Online-Digitaluhr | Lokale Uhrzeit in Echtzeit",
+    "description": "Eine minimalistische Online-Digitaluhr, die jede Sekunde aktualisiert wird. Prüfen Sie die lokale Uhrzeit sofort in mehreren Sprachen.",
+    "appName": "Clock App",
+    "siteName": "Clock App",
+    "ogImageAlt": "Vorschaubild der Clock App mit digitaler Uhrzeit",
+    "keywords": "online uhr,digitaluhr,lokale uhrzeit,aktuelle uhrzeit,echtzeit uhr"
+  },
+  "weekdays": {
+    "sunday": "So",
+    "monday": "Mo",
+    "tuesday": "Di",
+    "wednesday": "Mi",
+    "thursday": "Do",
+    "friday": "Fr",
+    "saturday": "Sa"
+  },
+  "time": {
+    "currentTime": "Aktuelle Uhrzeit",
+    "hours": "Stunden",
+    "minutes": "Minuten",
+    "seconds": "Sekunden",
+    "loading": "Uhrzeit wird geladen",
+    "ariaLabel": "Aktuelle Uhrzeit: {hours} Stunden {minutes} Minuten {seconds} Sekunden"
+  },
+  "date": {
+    "todaysDate": "Heutiges Datum"
+  },
+  "error": {
+    "clockError": "Beim Anzeigen der Uhr ist ein Fehler aufgetreten",
+    "retry": "Erneut versuchen"
+  },
+  "languageSwitcher": {
+    "label": "Sprache",
+    "switchTo": "Sprache wechseln zu {language}",
+    "fromTo": "{current} -> {next}",
+    "languages": {
+      "ja": "Japanisch",
+      "en": "Englisch",
+      "es": "Spanisch",
+      "pt": "Portugiesisch",
+      "fr": "Französisch",
+      "de": "Deutsch",
+      "hi": "Hindi"
+    }
+  },
+  "seoPages": {
+    "home": {
+      "heading": "Zeitwerkzeuge",
+      "worldClock": "Weltuhr",
+      "utcConverter": "UTC-Konverter",
+      "timeInCity": "Uhrzeit in Tokio"
+    },
+    "worldClock": {
+      "title": "Weltuhr | Live-Uhrzeit nach Stadt",
+      "heading": "Weltuhr",
+      "description": "Sehen Sie die lokale Live-Uhrzeit in wichtigen Städten weltweit.",
+      "backToHome": "Zurück zur Startseite"
+    },
+    "utcConverter": {
+      "title": "UTC-Konverter | UTC in lokale Zeit",
+      "heading": "UTC-Konverter",
+      "description": "Konvertieren Sie UTC-Datum und -Zeit in lokale Zeiten globaler Städte.",
+      "backToHome": "Zurück zur Startseite",
+      "utcDateTime": "UTC Datum und Uhrzeit",
+      "invalidDatetime": "Ungültiger Datums-/Zeitwert"
+    },
+    "timeInCity": {
+      "title": "Aktuelle Uhrzeit in {city} | Digitaluhr",
+      "heading": "Aktuelle Uhrzeit in {city}",
+      "description": "Live-Ortszeit für {city} ({timezone}).",
+      "backToWorldClock": "Zurück zur Weltuhr"
+    }
+  },
+  "menu": {
+    "open": "Menü öffnen",
+    "close": "Menü schließen"
+  }
+}

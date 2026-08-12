@@ -10,5 +10,5 @@ export default createMiddleware({
 
 // matcher must mirror locales array - update when locales change
 export const config = {
-  matcher: ['/', '/(ja|en)/:path*'],
+  matcher: ['/', '/(ja|en|es|pt|fr|de|hi)/:path*'],
 }

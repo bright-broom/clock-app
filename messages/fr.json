@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "title": "Horloge Numérique en Ligne | Heure Locale en Temps Réel",
+    "description": "Une horloge numérique en ligne minimaliste mise à jour chaque seconde. Consultez l'heure locale instantanément en plusieurs langues.",
+    "appName": "Clock App",
+    "siteName": "Clock App",
+    "ogImageAlt": "Aperçu de Clock App affichant l'heure numérique",
+    "keywords": "horloge en ligne,horloge numerique,heure locale,heure actuelle,horloge temps reel"
+  },
+  "weekdays": {
+    "sunday": "dim",
+    "monday": "lun",
+    "tuesday": "mar",
+    "wednesday": "mer",
+    "thursday": "jeu",
+    "friday": "ven",
+    "saturday": "sam"
+  },
+  "time": {
+    "currentTime": "Heure actuelle",
+    "hours": "heures",
+    "minutes": "minutes",
+    "seconds": "secondes",
+    "loading": "Chargement de l'heure",
+    "ariaLabel": "Heure actuelle : {hours} heures {minutes} minutes {seconds} secondes"
+  },
+  "date": {
+    "todaysDate": "Date d'aujourd'hui"
+  },
+  "error": {
+    "clockError": "Une erreur s'est produite lors de l'affichage de l'horloge",
+    "retry": "Réessayer"
+  },
+  "languageSwitcher": {
+    "label": "Langue",
+    "switchTo": "Changer la langue vers {language}",
+    "fromTo": "{current} -> {next}",
+    "languages": {
+      "ja": "Japonais",
+      "en": "Anglais",
+      "es": "Espagnol",
+      "pt": "Portugais",
+      "fr": "Français",
+      "de": "Allemand",
+      "hi": "Hindi"
+    }
+  },
+  "seoPages": {
+    "home": {
+      "heading": "Outils d'heure",
+      "worldClock": "Horloge mondiale",
+      "utcConverter": "Convertisseur UTC",
+      "timeInCity": "Heure à Tokyo"
+    },
+    "worldClock": {
+      "title": "Horloge mondiale | Heure en direct par ville",
+      "heading": "Horloge mondiale",
+      "description": "Consultez l'heure locale en direct dans les grandes villes du monde.",
+      "backToHome": "Retour à l'accueil"
+    },
+    "utcConverter": {
+      "title": "Convertisseur UTC | UTC vers heure locale",
+      "heading": "Convertisseur UTC",
+      "description": "Convertissez une date UTC vers l'heure locale des villes du monde.",
+      "backToHome": "Retour à l'accueil",
+      "utcDateTime": "Date et heure UTC",
+      "invalidDatetime": "Valeur de date et heure invalide"
+    },
+    "timeInCity": {
+      "title": "Heure actuelle à {city} | Horloge numérique",
+      "heading": "Heure actuelle à {city}",
+      "description": "Heure locale en direct pour {city} ({timezone}).",
+      "backToWorldClock": "Retour à l'horloge mondiale"
+    }
+  },
+  "menu": {
+    "open": "Ouvrir le menu",
+    "close": "Fermer le menu"
+  }
+}

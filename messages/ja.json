@@ -1,7 +1,11 @@
 {
   "metadata": {
-    "title": "Clock",
-    "description": "シンプルな時計アプリ"
+    "title": "オンラインデジタル時計 | リアルタイム現在時刻",
+    "description": "1秒ごとに更新されるミニマルなオンラインデジタル時計。多言語対応で現在時刻をすぐ確認できます。",
+    "appName": "時計アプリ",
+    "siteName": "時計アプリ",
+    "ogImageAlt": "デジタル時刻を表示する時計アプリのプレビュー画像",
+    "keywords": "オンライン時計,デジタル時計,現在時刻,リアルタイム時計,多言語対応時計,世界時計"
   },
   "weekdays": {
     "sunday": "日",
@@ -28,6 +32,49 @@
     "retry": "再試行"
   },
   "languageSwitcher": {
-    "label": "言語"
+    "label": "言語",
+    "switchTo": "{language}に切り替え",
+    "fromTo": "{current} -> {next}",
+    "languages": {
+      "ja": "日本語",
+      "en": "英語",
+      "es": "スペイン語",
+      "pt": "ポルトガル語",
+      "fr": "フランス語",
+      "de": "ドイツ語",
+      "hi": "ヒンディー語"
+    }
+  },
+  "menu": {
+    "open": "メニューを開く",
+    "close": "メニューを閉じる"
+  },
+  "seoPages": {
+    "home": {
+      "heading": "時刻ツール",
+      "worldClock": "世界時計",
+      "utcConverter": "UTC変換",
+      "timeInCity": "東京の時刻"
+    },
+    "worldClock": {
+      "title": "世界時計 | 主要都市の現在時刻",
+      "heading": "世界時計",
+      "description": "世界の主要都市の現在時刻をリアルタイムで表示します。1秒ごとに更新されます。",
+      "backToHome": "ホームへ戻る"
+    },
+    "utcConverter": {
+      "title": "UTC変換 | UTCから各都市の時刻へ変換",
+      "heading": "UTC変換",
+      "description": "UTC日時を入力して、世界各都市のローカル時刻へ変換します。",
+      "backToHome": "ホームへ戻る",
+      "utcDateTime": "UTC 日時",
+      "invalidDatetime": "日時の形式が正しくありません"
+    },
+    "timeInCity": {
+      "title": "{city}の現在時刻 | デジタル時計",
+      "heading": "{city}の現在時刻",
+      "description": "{city}（{timezone}）の現在時刻をリアルタイム表示します。",
+      "backToWorldClock": "世界時計へ戻る"
+    }
   }
 }

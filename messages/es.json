@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "title": "Reloj Digital Online | Hora Local en Tiempo Real",
+    "description": "Un reloj digital online minimalista que se actualiza cada segundo. Consulta la hora local al instante en japonés, inglés y más idiomas.",
+    "appName": "Clock App",
+    "siteName": "Clock App",
+    "ogImageAlt": "Imagen de vista previa de Clock App mostrando la hora digital",
+    "keywords": "reloj online,reloj digital,hora local,hora actual,reloj en tiempo real"
+  },
+  "weekdays": {
+    "sunday": "dom",
+    "monday": "lun",
+    "tuesday": "mar",
+    "wednesday": "mié",
+    "thursday": "jue",
+    "friday": "vie",
+    "saturday": "sáb"
+  },
+  "time": {
+    "currentTime": "Hora actual",
+    "hours": "horas",
+    "minutes": "minutos",
+    "seconds": "segundos",
+    "loading": "Cargando hora",
+    "ariaLabel": "Hora actual: {hours} horas {minutes} minutos {seconds} segundos"
+  },
+  "date": {
+    "todaysDate": "Fecha de hoy"
+  },
+  "error": {
+    "clockError": "Se produjo un error al mostrar el reloj",
+    "retry": "Reintentar"
+  },
+  "languageSwitcher": {
+    "label": "Idioma",
+    "switchTo": "Cambiar idioma a {language}",
+    "fromTo": "{current} -> {next}",
+    "languages": {
+      "ja": "Japonés",
+      "en": "Inglés",
+      "es": "Español",
+      "pt": "Portugués",
+      "fr": "Francés",
+      "de": "Alemán",
+      "hi": "Hindi"
+    }
+  },
+  "seoPages": {
+    "home": {
+      "heading": "Herramientas de tiempo",
+      "worldClock": "Reloj mundial",
+      "utcConverter": "Conversor UTC",
+      "timeInCity": "Hora en Tokio"
+    },
+    "worldClock": {
+      "title": "Reloj Mundial | Hora en vivo por ciudad",
+      "heading": "Reloj Mundial",
+      "description": "Consulta la hora local en vivo en ciudades importantes del mundo.",
+      "backToHome": "Volver al inicio"
+    },
+    "utcConverter": {
+      "title": "Conversor UTC | UTC a hora local",
+      "heading": "Conversor UTC",
+      "description": "Convierte una fecha y hora UTC a la hora local de ciudades globales.",
+      "backToHome": "Volver al inicio",
+      "utcDateTime": "Fecha y hora UTC",
+      "invalidDatetime": "Valor de fecha y hora no válido"
+    },
+    "timeInCity": {
+      "title": "Hora actual en {city} | Reloj digital",
+      "heading": "Hora actual en {city}",
+      "description": "Hora local en vivo de {city} ({timezone}).",
+      "backToWorldClock": "Volver al reloj mundial"
+    }
+  },
+  "menu": {
+    "open": "Abrir menú",
+    "close": "Cerrar menú"
+  }
+}

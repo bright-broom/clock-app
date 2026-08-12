@@ -7,10 +7,12 @@ import { IntlWrapper } from '@/test'
 import { Clock } from './Clock'
 
 describe('Clock', () => {
+  const fixedInstant = new Date('2024-01-15T01:30:45.000Z')
+
   beforeEach(() => {
     __resetTimeStore()
     vi.useFakeTimers()
-    vi.setSystemTime(new Date(2024, 0, 15, 10, 30, 45, 0))
+    vi.setSystemTime(fixedInstant)
   })
 
   afterEach(() => {
@@ -38,7 +40,15 @@ describe('Clock', () => {
         </IntlWrapper>
       )
 
-      expect(screen.getByText('2024年1月15日 (月)')).toBeInTheDocument()
+      const expectedDate = new Intl.DateTimeFormat('ja-JP', {
+        timeZone: 'Asia/Tokyo',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        weekday: 'short',
+      }).format(fixedInstant)
+
+      expect(screen.getByText(expectedDate)).toBeInTheDocument()
     })
 
     it('has accessible labels in Japanese', () => {
@@ -61,7 +71,7 @@ describe('Clock', () => {
         </IntlWrapper>
       )
 
-      expect(screen.getByText('Mon, Jan 15, 2024')).toBeInTheDocument()
+      expect(screen.getByText('Sun, January 14, 2024')).toBeInTheDocument()
     })
 
     it('has accessible labels in English', () => {
@@ -74,7 +84,7 @@ describe('Clock', () => {
       const timer = screen.getByRole('timer')
       expect(timer).toHaveAttribute(
         'aria-label',
-        'Current time: 10 hours 30 minutes 45 seconds'
+        'Current time: 20 hours 30 minutes 45 seconds'
       )
     })
   })
@@ -89,7 +99,7 @@ describe('Clock', () => {
     expect(screen.getByText('45')).toBeInTheDocument()
 
     act(() => {
-      vi.setSystemTime(new Date(2024, 0, 15, 10, 30, 46, 0))
+      vi.setSystemTime(new Date('2024-01-15T01:30:46.000Z'))
       vi.advanceTimersByTime(100)
     })
 

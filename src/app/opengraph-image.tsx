@@ -17,44 +17,65 @@ export default function OpenGraphImage() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#000',
-        gap: 20,
+        background:
+          'radial-gradient(circle at 28% 18%, rgba(255,255,255,0.22), transparent 36%), linear-gradient(145deg, #081326 8%, #11396f 56%, #0f8f89 100%)',
       }}
     >
       <div
         style={{
+          width: 280,
+          height: 280,
+          borderRadius: 999,
+          border: '20px solid rgba(255,255,255,0.92)',
+          background: 'rgba(255,255,255,0.08)',
+          position: 'relative',
           display: 'flex',
-          alignItems: 'baseline',
-          color: '#fff',
-          fontSize: 180,
-          fontWeight: 200,
-          fontFamily: 'system-ui, sans-serif',
-          letterSpacing: '-0.02em',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 16px 28px rgba(0,0,0,0.26)',
         }}
       >
-        <span>10</span>
-        <span style={{ opacity: 0.8, margin: '0 8px' }}>:</span>
-        <span>30</span>
-        <span
+        <div
           style={{
-            fontSize: 70,
-            opacity: 0.5,
-            marginLeft: 16,
-            alignSelf: 'flex-start',
+            position: 'absolute',
+            top: 20,
+            width: 20,
+            height: 20,
+            borderRadius: 999,
+            backgroundColor: '#FFFFFF',
+            opacity: 0.95,
           }}
-        >
-          45
-        </span>
-      </div>
-      <div
-        style={{
-          color: 'rgba(255, 255, 255, 0.5)',
-          fontSize: 36,
-          fontWeight: 300,
-          letterSpacing: '0.05em',
-        }}
-      >
-        Minimal Clock
+        />
+        <div
+          style={{
+            position: 'absolute',
+            width: 16,
+            height: 90,
+            borderRadius: 999,
+            backgroundColor: '#FFFFFF',
+            transform: 'translateY(-14%) rotate(18deg)',
+            transformOrigin: 'bottom center',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            width: 16,
+            height: 70,
+            borderRadius: 999,
+            backgroundColor: '#CCFBF1',
+            transform: 'translate(18%, 7%) rotate(106deg)',
+            transformOrigin: 'bottom center',
+          }}
+        />
+        <div
+          style={{
+            width: 34,
+            height: 34,
+            borderRadius: 999,
+            backgroundColor: '#FFFFFF',
+          }}
+        />
       </div>
     </div>,
     { ...size }

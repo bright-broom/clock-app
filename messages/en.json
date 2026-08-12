@@ -1,7 +1,11 @@
 {
   "metadata": {
-    "title": "Clock",
-    "description": "A simple clock app"
+    "title": "Online Digital Clock | Real-time Local Time",
+    "description": "A minimalist online digital clock that updates every second. Check local time instantly in Japanese or English.",
+    "appName": "Clock App",
+    "siteName": "Clock App",
+    "ogImageAlt": "Clock App preview image showing digital time",
+    "keywords": "online clock,digital clock,local time,current time,real-time clock,japanese clock,english clock"
   },
   "weekdays": {
     "sunday": "Sun",
@@ -28,6 +32,49 @@
     "retry": "Retry"
   },
   "languageSwitcher": {
-    "label": "Language"
+    "label": "Language",
+    "switchTo": "Switch language to {language}",
+    "fromTo": "{current} -> {next}",
+    "languages": {
+      "ja": "Japanese",
+      "en": "English",
+      "es": "Spanish",
+      "pt": "Portuguese",
+      "fr": "French",
+      "de": "German",
+      "hi": "Hindi"
+    }
+  },
+  "menu": {
+    "open": "Open menu",
+    "close": "Close menu"
+  },
+  "seoPages": {
+    "home": {
+      "heading": "Explore time tools",
+      "worldClock": "World Clock",
+      "utcConverter": "UTC Converter",
+      "timeInCity": "Time in Tokyo"
+    },
+    "worldClock": {
+      "title": "World Clock | Live Time in Major Cities",
+      "heading": "World Clock",
+      "description": "Check live local time in major cities around the world. Updated every second with timezone-aware formatting.",
+      "backToHome": "Back to clock home"
+    },
+    "utcConverter": {
+      "title": "UTC Converter | Convert UTC to Local City Time",
+      "heading": "UTC Converter",
+      "description": "Convert a UTC datetime to local time across global cities in one place.",
+      "backToHome": "Back to clock home",
+      "utcDateTime": "UTC Date Time",
+      "invalidDatetime": "Invalid datetime value"
+    },
+    "timeInCity": {
+      "title": "Current Time in {city} | Digital Clock",
+      "heading": "Current Time in {city}",
+      "description": "Live local time for {city} ({timezone}). Updated every second.",
+      "backToWorldClock": "Back to world clock"
+    }
   }
 }

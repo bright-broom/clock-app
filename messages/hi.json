@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "title": "ऑनलाइन डिजिटल घड़ी | रीयल-टाइम स्थानीय समय",
+    "description": "एक मिनिमल ऑनलाइन डिजिटल घड़ी जो हर सेकंड अपडेट होती है। स्थानीय समय तुरंत देखें।",
+    "appName": "Clock App",
+    "siteName": "Clock App",
+    "ogImageAlt": "डिजिटल समय दिखाती Clock App की प्रीव्यू इमेज",
+    "keywords": "online clock,digital clock,local time,current time,real time clock"
+  },
+  "weekdays": {
+    "sunday": "रवि",
+    "monday": "सोम",
+    "tuesday": "मंगल",
+    "wednesday": "बुध",
+    "thursday": "गुरु",
+    "friday": "शुक्र",
+    "saturday": "शनि"
+  },
+  "time": {
+    "currentTime": "वर्तमान समय",
+    "hours": "घंटे",
+    "minutes": "मिनट",
+    "seconds": "सेकंड",
+    "loading": "समय लोड हो रहा है",
+    "ariaLabel": "वर्तमान समय: {hours} घंटे {minutes} मिनट {seconds} सेकंड"
+  },
+  "date": {
+    "todaysDate": "आज की तारीख"
+  },
+  "error": {
+    "clockError": "घड़ी दिखाते समय एक त्रुटि हुई",
+    "retry": "फिर प्रयास करें"
+  },
+  "languageSwitcher": {
+    "label": "भाषा",
+    "switchTo": "भाषा {language} में बदलें",
+    "fromTo": "{current} -> {next}",
+    "languages": {
+      "ja": "जापानी",
+      "en": "अंग्रेज़ी",
+      "es": "स्पेनिश",
+      "pt": "पुर्तगाली",
+      "fr": "फ्रेंच",
+      "de": "जर्मन",
+      "hi": "हिन्दी"
+    }
+  },
+  "seoPages": {
+    "home": {
+      "heading": "समय टूल्स",
+      "worldClock": "विश्व घड़ी",
+      "utcConverter": "UTC कन्वर्टर",
+      "timeInCity": "टोक्यो का समय"
+    },
+    "worldClock": {
+      "title": "विश्व घड़ी | प्रमुख शहरों का लाइव समय",
+      "heading": "विश्व घड़ी",
+      "description": "दुनिया के प्रमुख शहरों का स्थानीय समय लाइव देखें।",
+      "backToHome": "होम पर वापस जाएँ"
+    },
+    "utcConverter": {
+      "title": "UTC कन्वर्टर | UTC से स्थानीय समय",
+      "heading": "UTC कन्वर्टर",
+      "description": "UTC दिनांक और समय को वैश्विक शहरों के स्थानीय समय में बदलें।",
+      "backToHome": "होम पर वापस जाएँ",
+      "utcDateTime": "UTC दिनांक और समय",
+      "invalidDatetime": "अमान्य दिनांक/समय मान"
+    },
+    "timeInCity": {
+      "title": "{city} में वर्तमान समय | डिजिटल घड़ी",
+      "heading": "{city} में वर्तमान समय",
+      "description": "{city} ({timezone}) का लाइव स्थानीय समय।",
+      "backToWorldClock": "विश्व घड़ी पर वापस जाएँ"
+    }
+  },
+  "menu": {
+    "open": "मेनू खोलें",
+    "close": "मेनू बंद करें"
+  }
+}

@@ -1,1 +1,1 @@
-export { locales, defaultLocale, type Locale } from './config'
+export { locales, defaultLocale, localeTimeZones, type Locale } from './config'

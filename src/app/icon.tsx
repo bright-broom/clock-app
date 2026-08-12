@@ -1,5 +1,7 @@
 import { ImageResponse } from 'next/og'
 
+import { ClockGlyph } from './ClockGlyph'
+
 export const size = {
   width: 32,
   height: 32,
@@ -7,11 +9,6 @@ export const size = {
 export const contentType = 'image/png'
 
 export default function Icon() {
-  const canvasSize = size.width
-  const dialSize = canvasSize * 0.64
-  const handWidth = Math.max(2, Math.round(canvasSize * 0.08))
-  const centerDot = Math.max(3, Math.round(canvasSize * 0.14))
-
   return new ImageResponse(
     <div
       style={{
@@ -20,54 +17,19 @@ export default function Icon() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: '26%',
+        borderRadius: '30%',
         background:
-          'linear-gradient(150deg, #06122A 10%, #0E315E 55%, #13A3A3 100%)',
+          'radial-gradient(circle at 24% 20%, rgba(255,255,255,0.28), transparent 34%), linear-gradient(150deg, #0A1324 10%, #10356A 58%, #0EA5A2 100%)',
       }}
     >
-      <div
-        style={{
-          width: dialSize,
-          height: dialSize,
-          borderRadius: '999px',
-          border: '2px solid rgba(255, 255, 255, 0.72)',
-          background: 'rgba(3, 10, 22, 0.52)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          position: 'relative',
-        }}
-      >
-        <div
-          style={{
-            position: 'absolute',
-            width: handWidth,
-            height: dialSize * 0.29,
-            backgroundColor: '#FFFFFF',
-            borderRadius: 999,
-            transform: 'translateY(-12%)',
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            width: handWidth,
-            height: dialSize * 0.24,
-            backgroundColor: '#A7F3F0',
-            borderRadius: 999,
-            transform: 'translate(18%, 8%) rotate(56deg)',
-            transformOrigin: 'bottom center',
-          }}
-        />
-        <div
-          style={{
-            width: centerDot,
-            height: centerDot,
-            borderRadius: '999px',
-            backgroundColor: '#FFFFFF',
-          }}
-        />
-      </div>
+      <ClockGlyph
+        canvasSize={size.width}
+        minimumStroke={2}
+        minimumCenterDot={3}
+        minimumMarkerSize={2}
+        shadow="0 2px 5px rgba(0,0,0,0.28)"
+        markerOffset={1}
+      />
     </div>,
     { ...size }
   )
