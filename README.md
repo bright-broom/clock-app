@@ -84,7 +84,7 @@ src/
 
 ## リリース・運用チェックリスト
 
-1. Node.js 20.19.x / npm 10.9.x と `npm ci` を使用する
+1. Node.js 24.x / npm 10.9.x と `npm ci` を使用する
 2. `NEXT_PUBLIC_SITE_URL` を承認済みの本番HTTPS originへ設定する
 3. Pull RequestでCIとPreview Deploymentを成功させ、画面・レスポンシブ・キーボード操作を確認する
 4. `/api/web-vitals` にCDN/WAFの分散レート制限を設定する（アプリ内の同一オリジン検証だけで代替しない）
