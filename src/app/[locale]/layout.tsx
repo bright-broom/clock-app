@@ -18,7 +18,7 @@ const inter = Inter({
 
 type Props = {
   children: React.ReactNode
-  params: { locale: string }
+  params: Promise<{ locale: string }>
 }
 
 const OG_LOCALE_MAP: Record<Locale, string> = {
@@ -41,9 +41,8 @@ const LOCALE_COUNTRY_LABELS: Record<Locale, string> = {
   hi: 'India',
 }
 
-export async function generateMetadata({
-  params: { locale },
-}: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'metadata' })
   const siteUrl = getSiteUrl()
   const keywords = t('keywords')
@@ -134,10 +133,8 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
 }
 
-export default async function RootLayout({
-  children,
-  params: { locale },
-}: Props) {
+export default async function RootLayout({ children, params }: Props) {
+  const { locale } = await params
   if (!locales.includes(locale as Locale)) {
     notFound()
   }
@@ -146,14 +143,6 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} className={inter.variable}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-      </head>
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
           {children}

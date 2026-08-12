@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
-import { memo, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 
 import {
   CloseIcon,
@@ -13,42 +13,83 @@ import {
 
 import { LanguageSwitcher } from './LanguageSwitcher'
 
-export const HomeUtilityMenu = memo(function HomeUtilityMenu() {
+type Props = {
+  showTools?: boolean
+}
+
+export const HomeUtilityMenu = memo(function HomeUtilityMenu({
+  showTools = true,
+}: Props) {
   const [open, setOpen] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const firstLinkRef = useRef<HTMLAnchorElement>(null)
   const locale = useLocale()
   const t = useTranslations('seoPages.home')
   const tMenu = useTranslations('menu')
 
+  useEffect(() => {
+    if (!open) return
+
+    firstLinkRef.current?.focus()
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!containerRef.current?.contains(event.target as Node)) {
+        setOpen(false)
+      }
+    }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpen(false)
+        triggerRef.current?.focus()
+      }
+    }
+
+    document.addEventListener('pointerdown', handlePointerDown)
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [open])
+
   return (
-    <div className="absolute right-[clamp(1.236rem,2.36vw,2.618rem)] top-[clamp(1.236rem,2.36vw,2.618rem)] z-20 flex flex-col items-end">
+    <div
+      ref={containerRef}
+      className="absolute right-[clamp(1.236rem,2.36vw,2.618rem)] top-[clamp(1.236rem,2.36vw,2.618rem)] z-20 flex flex-col items-end"
+    >
       <div className="flex items-center justify-end gap-2">
         <LanguageSwitcher />
-        <button
-          type="button"
-          onClick={() => setOpen((prev) => !prev)}
-          className="group flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-border bg-background-overlay text-foreground-muted backdrop-blur-xl transition-[background-color,border-color,color] hover:border-foreground-muted hover:bg-background-overlay-strong hover:text-foreground"
-          aria-label={open ? tMenu('close') : tMenu('open')}
-          aria-expanded={open}
-          aria-controls="home-utility-menu"
-          title={open ? tMenu('close') : tMenu('open')}
-        >
-          {open ? (
-            <CloseIcon className="h-[1.05rem] w-[1.05rem] transition-[filter,opacity] duration-200 ease-out group-hover:opacity-100 group-hover:brightness-125" />
-          ) : (
-            <MenuIcon className="h-[1.05rem] w-[1.05rem] transition-[filter,opacity] duration-200 ease-out group-hover:opacity-100 group-hover:brightness-125" />
-          )}
-        </button>
+        {showTools ? (
+          <button
+            ref={triggerRef}
+            type="button"
+            onClick={() => setOpen((prev) => !prev)}
+            className="group flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-border bg-background-overlay text-foreground-muted backdrop-blur-xl transition-[background-color,border-color,color] hover:border-foreground-muted hover:bg-background-overlay-strong hover:text-foreground"
+            aria-label={open ? tMenu('close') : tMenu('open')}
+            aria-expanded={open}
+            aria-controls="home-utility-menu"
+            title={open ? tMenu('close') : tMenu('open')}
+          >
+            {open ? (
+              <CloseIcon className="h-[1.05rem] w-[1.05rem] transition-[filter,opacity] duration-200 ease-out group-hover:opacity-100 group-hover:brightness-125" />
+            ) : (
+              <MenuIcon className="h-[1.05rem] w-[1.05rem] transition-[filter,opacity] duration-200 ease-out group-hover:opacity-100 group-hover:brightness-125" />
+            )}
+          </button>
+        ) : null}
       </div>
 
-      {open ? (
+      {showTools && open ? (
         <nav
           id="home-utility-menu"
           className="menu-enter mt-[0.618rem] w-[13rem] rounded-[1.618rem] border border-border bg-background/90 p-[0.618rem] shadow-2xl backdrop-blur-xl"
-          aria-label={t('heading')}
+          aria-label={tMenu('open')}
         >
           <ul className="grid gap-1">
             <li>
               <Link
+                ref={firstLinkRef}
                 href={`/${locale}/world-clock`}
                 className="group flex min-h-[44px] items-center gap-3 rounded-xl px-3 py-2 text-sm text-foreground-muted transition-colors hover:bg-background-overlay hover:text-foreground"
                 onClick={() => setOpen(false)}

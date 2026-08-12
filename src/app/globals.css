@@ -123,6 +123,11 @@
     height: min(47.2vmin, 29.2rem);
     opacity: var(--ratio-secondary);
   }
+
+  :lang(ja) .localized-tracking,
+  :lang(hi) .localized-tracking {
+    letter-spacing: 0.0618em;
+  }
 }
 
 @layer components {
@@ -187,5 +192,26 @@
   .clock-enter,
   .menu-enter {
     animation: none;
+  }
+}
+
+@media (max-height: 32.5rem) and (orientation: landscape) {
+  .clock-stage {
+    padding-top: 3.82rem;
+    padding-bottom: 5.82rem;
+  }
+
+  .tool-nav {
+    bottom: 0.618rem;
+    max-width: 32rem;
+  }
+
+  .tool-card {
+    min-height: 4.236rem;
+    border-radius: 1rem;
+  }
+
+  .date-display {
+    margin-top: 1rem;
   }
 }
