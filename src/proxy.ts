@@ -8,7 +8,7 @@ export default createMiddleware({
   localePrefix: 'always',
 })
 
-// matcher must mirror locales array - update when locales change
+// Matcher must mirror the locales array. Update both when adding a locale.
 export const config = {
   matcher: ['/', '/(ja|en|es|pt|fr|de|hi)/:path*'],
 }

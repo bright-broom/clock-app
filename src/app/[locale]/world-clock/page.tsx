@@ -8,12 +8,11 @@ import { locales, type Locale } from '@/lib'
 import { getSiteUrl } from '@/lib/site'
 
 type Props = {
-  params: { locale: Locale }
+  params: Promise<{ locale: Locale }>
 }
 
-export async function generateMetadata({
-  params: { locale },
-}: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'seoPages.worldClock' })
   const siteUrl = getSiteUrl()
 
@@ -26,7 +25,8 @@ export async function generateMetadata({
   }
 }
 
-export default async function WorldClockPage({ params: { locale } }: Props) {
+export default async function WorldClockPage({ params }: Props) {
+  const { locale } = await params
   if (!locales.includes(locale)) {
     notFound()
   }
