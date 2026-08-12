@@ -50,7 +50,9 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    // Keep structured platform logs and error diagnostics in production while
+    // still removing incidental debug output from client bundles.
+    removeConsole: isProduction ? { exclude: ['error', 'info'] } : false,
   },
   experimental: {
     optimizeCss: true,

@@ -13,16 +13,21 @@ function reportWebVitals(metric: Metric) {
     navigationType: metric.navigationType,
   })
 
-  if (navigator.sendBeacon) {
-    const payload = new Blob([body], { type: 'application/json' })
-    navigator.sendBeacon('/api/web-vitals', payload)
-  } else {
+  const sendWithFetch = () =>
     fetch('/api/web-vitals', {
       method: 'POST',
       body,
       keepalive: true,
       headers: { 'Content-Type': 'application/json' },
     }).catch(() => undefined)
+
+  if (navigator.sendBeacon) {
+    const payload = new Blob([body], { type: 'application/json' })
+    if (!navigator.sendBeacon('/api/web-vitals', payload)) {
+      void sendWithFetch()
+    }
+  } else {
+    void sendWithFetch()
   }
 
   if (process.env.NODE_ENV === 'development') {

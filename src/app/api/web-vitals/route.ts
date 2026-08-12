@@ -43,11 +43,18 @@ function jsonResponse(ok: boolean, status: number) {
 
 function isSameOriginBrowserRequest(request: Request): boolean {
   const fetchSite = request.headers.get('sec-fetch-site')
+  const origin = request.headers.get('origin')
+
+  // This endpoint is browser-only. Requiring browser request metadata prevents
+  // non-browser clients from bypassing both same-origin checks by omission.
+  if (!fetchSite && !origin) {
+    return false
+  }
+
   if (fetchSite && fetchSite !== 'same-origin') {
     return false
   }
 
-  const origin = request.headers.get('origin')
   if (!origin) {
     return true
   }
@@ -139,12 +146,15 @@ export async function POST(request: Request) {
       return jsonResponse(false, 400)
     }
 
+    // This structured record is intentionally retained by next.config.js so
+    // the hosting platform can ingest it without an additional SaaS dependency.
+    // The validated payload contains no user identifiers or request metadata.
     console.info(
       JSON.stringify({
         level: 'info',
-        event: 'WebVitals',
-        payload,
-        at: new Date().toISOString(),
+        event: 'web_vital',
+        metric: payload,
+        timestamp: new Date().toISOString(),
       })
     )
 

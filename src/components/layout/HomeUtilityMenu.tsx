@@ -13,14 +13,9 @@ import {
 
 import { LanguageSwitcher } from './LanguageSwitcher'
 
-type Props = {
-  showTools?: boolean
-}
-
-export const HomeUtilityMenu = memo(function HomeUtilityMenu({
-  showTools = true,
-}: Props) {
+export const HomeUtilityMenu = memo(function HomeUtilityMenu() {
   const [open, setOpen] = useState(false)
+  const [languageOpen, setLanguageOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
   const firstLinkRef = useRef<HTMLAnchorElement>(null)
@@ -59,32 +54,39 @@ export const HomeUtilityMenu = memo(function HomeUtilityMenu({
       className="absolute right-[clamp(1.236rem,2.36vw,2.618rem)] top-[clamp(1.236rem,2.36vw,2.618rem)] z-20 flex flex-col items-end"
     >
       <div className="flex items-center justify-end gap-2">
-        <LanguageSwitcher />
-        {showTools ? (
-          <button
-            ref={triggerRef}
-            type="button"
-            onClick={() => setOpen((prev) => !prev)}
-            className="group flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-border bg-background-overlay text-foreground-muted backdrop-blur-xl transition-[background-color,border-color,color] hover:border-foreground-muted hover:bg-background-overlay-strong hover:text-foreground"
-            aria-label={open ? tMenu('close') : tMenu('open')}
-            aria-expanded={open}
-            aria-controls="home-utility-menu"
-            title={open ? tMenu('close') : tMenu('open')}
-          >
-            {open ? (
-              <CloseIcon className="h-[1.05rem] w-[1.05rem] transition-[filter,opacity] duration-200 ease-out group-hover:opacity-100 group-hover:brightness-125" />
-            ) : (
-              <MenuIcon className="h-[1.05rem] w-[1.05rem] transition-[filter,opacity] duration-200 ease-out group-hover:opacity-100 group-hover:brightness-125" />
-            )}
-          </button>
-        ) : null}
+        <LanguageSwitcher
+          open={languageOpen}
+          onOpenChange={(nextOpen) => {
+            setLanguageOpen(nextOpen)
+            if (nextOpen) setOpen(false)
+          }}
+        />
+        <button
+          ref={triggerRef}
+          type="button"
+          onClick={() => {
+            setLanguageOpen(false)
+            setOpen((prev) => !prev)
+          }}
+          className="group flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-border bg-background-overlay text-foreground-muted backdrop-blur-xl transition-[background-color,border-color,color] hover:border-foreground-muted hover:bg-background-overlay-strong hover:text-foreground"
+          aria-label={open ? tMenu('close') : tMenu('open')}
+          aria-expanded={open}
+          aria-controls="home-utility-menu"
+          title={open ? tMenu('close') : tMenu('open')}
+        >
+          {open ? (
+            <CloseIcon className="h-[1.05rem] w-[1.05rem] transition-[filter,opacity] duration-200 ease-out group-hover:opacity-100 group-hover:brightness-125" />
+          ) : (
+            <MenuIcon className="h-[1.05rem] w-[1.05rem] transition-[filter,opacity] duration-200 ease-out group-hover:opacity-100 group-hover:brightness-125" />
+          )}
+        </button>
       </div>
 
-      {showTools && open ? (
+      {open ? (
         <nav
           id="home-utility-menu"
           className="menu-enter mt-[0.618rem] w-[13rem] rounded-[1.618rem] border border-border bg-background/90 p-[0.618rem] shadow-2xl backdrop-blur-xl"
-          aria-label={tMenu('open')}
+          aria-label={t('heading')}
         >
           <ul className="grid gap-1">
             <li>

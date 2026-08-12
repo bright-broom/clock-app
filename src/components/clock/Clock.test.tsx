@@ -99,8 +99,7 @@ describe('Clock', () => {
     expect(screen.getByText('45')).toBeInTheDocument()
 
     act(() => {
-      vi.setSystemTime(new Date('2024-01-15T01:30:46.000Z'))
-      vi.advanceTimersByTime(100)
+      vi.advanceTimersByTime(1000)
     })
 
     expect(screen.getByText('46')).toBeInTheDocument()

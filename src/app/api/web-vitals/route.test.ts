@@ -43,6 +43,18 @@ describe('POST /api/web-vitals', () => {
     expect(response.status).toBe(403)
   })
 
+  it('rejects requests that omit browser origin metadata', async () => {
+    const response = await POST(
+      new Request(endpoint, {
+        method: 'POST',
+        body: JSON.stringify(validPayload),
+        headers: { 'Content-Type': 'application/json' },
+      })
+    )
+
+    expect(response.status).toBe(403)
+  })
+
   it('rejects an unsupported media type', async () => {
     const response = await POST(
       request(JSON.stringify(validPayload), { 'Content-Type': 'text/plain' })

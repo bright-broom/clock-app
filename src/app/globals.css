@@ -198,17 +198,7 @@
 @media (max-height: 32.5rem) and (orientation: landscape) {
   .clock-stage {
     padding-top: 3.82rem;
-    padding-bottom: 5.82rem;
-  }
-
-  .tool-nav {
-    bottom: 0.618rem;
-    max-width: 32rem;
-  }
-
-  .tool-card {
-    min-height: 4.236rem;
-    border-radius: 1rem;
+    padding-bottom: 3.82rem;
   }
 
   .date-display {

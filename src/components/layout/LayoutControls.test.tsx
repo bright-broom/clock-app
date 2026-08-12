@@ -4,7 +4,6 @@ import { describe, expect, it, vi } from 'vitest'
 import { IntlWrapper } from '@/test'
 
 import { HomeUtilityMenu } from './HomeUtilityMenu'
-import { LanguageSwitcher } from './LanguageSwitcher'
 
 const navigation = vi.hoisted(() => ({
   pathname: '/ja',
@@ -48,48 +47,40 @@ describe('HomeUtilityMenu', () => {
     expect(trigger).toHaveFocus()
   })
 
-  it('omits duplicate tool navigation on the home screen', () => {
+  it('keeps the language and tools popovers mutually exclusive', () => {
     render(
       <IntlWrapper locale="ja">
-        <HomeUtilityMenu showTools={false} />
-      </IntlWrapper>
-    )
-
-    expect(
-      screen.queryByRole('button', { name: 'メニューを開く' })
-    ).not.toBeInTheDocument()
-    expect(
-      screen.getByRole('button', { name: '言語: 日本語' })
-    ).toBeInTheDocument()
-  })
-})
-
-describe('LanguageSwitcher', () => {
-  it('offers every supported locale directly', () => {
-    render(
-      <IntlWrapper locale="ja">
-        <LanguageSwitcher />
+        <HomeUtilityMenu />
       </IntlWrapper>
     )
 
     fireEvent.click(screen.getByRole('button', { name: '言語: 日本語' }))
-
     expect(screen.getAllByRole('option')).toHaveLength(7)
-    expect(screen.getByRole('option', { name: '日本語 ja' })).toHaveAttribute(
-      'aria-selected',
-      'true'
-    )
+    fireEvent.click(screen.getByRole('button', { name: 'メニューを開く' }))
+
+    expect(screen.queryByRole('option')).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '世界時計' })).toBeInTheDocument()
   })
 
-  it('navigates directly to the selected locale', () => {
+  it('supports listbox keyboard navigation and locale selection', () => {
     navigation.push.mockClear()
     render(
       <IntlWrapper locale="ja">
-        <LanguageSwitcher />
+        <HomeUtilityMenu />
       </IntlWrapper>
     )
 
-    fireEvent.click(screen.getByRole('button', { name: '言語: 日本語' }))
+    fireEvent.keyDown(screen.getByRole('button', { name: '言語: 日本語' }), {
+      key: 'ArrowDown',
+    })
+    expect(screen.getAllByRole('option')).toHaveLength(7)
+    expect(screen.getByRole('option', { name: '日本語 ja' })).toHaveFocus()
+
+    fireEvent.keyDown(screen.getByRole('listbox', { name: '言語' }), {
+      key: 'ArrowDown',
+    })
+    expect(screen.getByRole('option', { name: '英語 en' })).toHaveFocus()
+
     fireEvent.click(screen.getByRole('option', { name: '英語 en' }))
 
     expect(navigation.push).toHaveBeenCalledWith('/en')

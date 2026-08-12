@@ -2,6 +2,11 @@
   "name": "clock-app",
   "version": "1.0.0",
   "private": true,
+  "packageManager": "npm@10.9.9",
+  "engines": {
+    "node": ">=20.19.0 <21",
+    "npm": ">=10.9.0 <11"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
