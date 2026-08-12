@@ -29,11 +29,14 @@ export function LanguageSwitcher() {
     <button
       type="button"
       onClick={handleToggle}
-      className="group flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-border bg-background-overlay text-foreground-muted transition-colors hover:text-foreground motion-reduce:transition-none"
+      className="group flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-border bg-background-overlay px-3 text-foreground-muted backdrop-blur-xl transition-[background-color,border-color,color] hover:border-foreground-muted hover:bg-background-overlay-strong hover:text-foreground motion-reduce:transition-none"
       aria-label={t('switchTo', { language: nextLabel })}
       title={t('fromTo', { current: currentLabel, next: nextLabel })}
     >
       <EarthIcon className="h-[1.05rem] w-[1.05rem] transition-[filter,opacity] duration-200 ease-out group-hover:opacity-100 group-hover:brightness-125 motion-reduce:transition-none" />
+      <span className="text-[0.65rem] font-semibold uppercase tracking-[0.16em]">
+        {locale}
+      </span>
     </button>
   )
 }
