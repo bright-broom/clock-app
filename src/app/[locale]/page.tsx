@@ -1,14 +1,16 @@
 import { getTranslations } from 'next-intl/server'
 
 import { Clock, ErrorBoundary, HomeUtilityMenu } from '@/components'
+import { serializeJsonLd } from '@/lib'
 import { getSiteUrl } from '@/lib/site'
 import { WebVitals } from '@/lib/web-vitals'
 
 type Props = {
-  params: { locale: string }
+  params: Promise<{ locale: string }>
 }
 
-export default async function Home({ params: { locale } }: Props) {
+export default async function Home({ params }: Props) {
+  const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'metadata' })
   const siteUrl = getSiteUrl()
   const pageUrl = `${siteUrl}/${locale}`
@@ -27,7 +29,7 @@ export default async function Home({ params: { locale } }: Props) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
       <main className="relative flex min-h-screen items-center justify-center bg-background">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_12%,rgba(255,255,255,0.1),transparent_42%)]" />

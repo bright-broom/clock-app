@@ -4,12 +4,12 @@ import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 
 import { CityTimeCard, HomeUtilityMenu } from '@/components'
-import { locales, type Locale } from '@/lib'
+import { locales, serializeJsonLd, type Locale } from '@/lib'
 import { getSiteUrl } from '@/lib/site'
 import { cityTimeZones, findCityBySlug } from '@/lib/timezones'
 
 type Props = {
-  params: { locale: Locale; city: string }
+  params: Promise<{ locale: Locale; city: string }>
 }
 
 export function generateStaticParams() {
@@ -18,9 +18,8 @@ export function generateStaticParams() {
   )
 }
 
-export async function generateMetadata({
-  params: { locale, city },
-}: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale, city } = await params
   const cityInfo = findCityBySlug(city)
   if (!cityInfo) {
     return {}
@@ -43,9 +42,8 @@ export async function generateMetadata({
   }
 }
 
-export default async function TimeInCityPage({
-  params: { locale, city },
-}: Props) {
+export default async function TimeInCityPage({ params }: Props) {
+  const { locale, city } = await params
   const cityInfo = findCityBySlug(city)
   if (!cityInfo) {
     notFound()
@@ -68,7 +66,7 @@ export default async function TimeInCityPage({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
       <main className="relative min-h-screen bg-background">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_12%,rgba(255,255,255,0.1),transparent_42%)]" />
