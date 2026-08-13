@@ -12,8 +12,7 @@ export type RawTimeState = TimeDigits & {
 
 let currentTime: RawTimeState | null = null
 let listeners: Set<() => void> = new Set()
-let intervalId: ReturnType<typeof setInterval> | null = null
-let lastSecond = -1
+let timeoutId: ReturnType<typeof setTimeout> | null = null
 
 function padZero(n: number): string {
   return n < 10 ? `0${n}` : String(n)
@@ -30,30 +29,29 @@ function calculateTime(): RawTimeState {
   }
 }
 
-function tick() {
+function scheduleNextTick() {
   const now = new Date()
-  const currentSecond = now.getSeconds()
+  const delay = Math.max(1, 1000 - now.getMilliseconds())
+  timeoutId = setTimeout(tick, delay)
+}
 
-  if (currentSecond !== lastSecond) {
-    lastSecond = currentSecond
-    currentTime = calculateTime()
-    listeners.forEach((listener) => listener())
-  }
+function tick() {
+  currentTime = calculateTime()
+  listeners.forEach((listener) => listener())
+  scheduleNextTick()
 }
 
 function startTicking() {
-  if (intervalId === null && listeners.size > 0) {
+  if (timeoutId === null && listeners.size > 0) {
     currentTime = calculateTime()
-    lastSecond = new Date().getSeconds()
-    intervalId = setInterval(tick, 100)
+    scheduleNextTick()
   }
 }
 
 function stopTicking() {
-  if (intervalId !== null) {
-    clearInterval(intervalId)
-    intervalId = null
-    lastSecond = -1
+  if (timeoutId !== null) {
+    clearTimeout(timeoutId)
+    timeoutId = null
   }
 }
 
@@ -89,5 +87,4 @@ export function __resetTimeStore() {
   stopTicking()
   currentTime = null
   listeners = new Set()
-  lastSecond = -1
 }

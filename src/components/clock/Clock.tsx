@@ -65,6 +65,11 @@ export const Clock = memo(function Clock() {
       role="timer"
       aria-label={t('time.ariaLabel', { hours, minutes, seconds })}
     >
+      <div className="mb-[1.618rem] flex items-center justify-center gap-[1rem] text-[0.618rem] font-medium uppercase tracking-[0.236em] text-foreground-muted sm:mb-[2.618rem] sm:text-[0.7rem]">
+        <span className="h-px w-[2.618rem] bg-border sm:w-[3.82rem]" />
+        <span>{timeZone.replace('_', ' ')}</span>
+        <span className="h-px w-[2.618rem] bg-border sm:w-[3.82rem]" />
+      </div>
       <TimeDisplay hours={hours} minutes={minutes} seconds={seconds} />
       <DateDisplay date={formattedDate} />
     </div>

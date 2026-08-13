@@ -37,9 +37,8 @@ export function getSiteUrl(): string {
     return validateSiteUrl(explicitUrl, 'NEXT_PUBLIC_SITE_URL')
   }
 
-  const vercelUrl = process.env.VERCEL_URL
-  if (vercelUrl) {
-    return validateSiteUrl(`https://${vercelUrl}`, 'VERCEL_URL')
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('NEXT_PUBLIC_SITE_URL is required for production builds')
   }
 
   return FALLBACK_SITE_URL

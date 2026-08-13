@@ -32,8 +32,7 @@ describe('useTime', () => {
     expect(result.current?.seconds).toBe('45')
 
     act(() => {
-      vi.setSystemTime(new Date(2024, 0, 15, 10, 30, 46, 0))
-      vi.advanceTimersByTime(100)
+      vi.advanceTimersByTime(1000)
     })
 
     expect(result.current?.seconds).toBe('46')
@@ -66,8 +65,7 @@ describe('useTime', () => {
     expect(result1.current?.seconds).toEqual(result2.current?.seconds)
 
     act(() => {
-      vi.setSystemTime(new Date(2024, 0, 15, 10, 30, 46, 0))
-      vi.advanceTimersByTime(100)
+      vi.advanceTimersByTime(1000)
     })
 
     expect(result1.current?.seconds).toBe('46')
