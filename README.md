@@ -78,7 +78,7 @@ src/
 └── types/             # 型定義
 ```
 
-`src/features/` の依存方向と Feature の公開 API は [Architecture](./docs/architecture.md)、公開判定は [Release Gate](./docs/release-gate.md) を参照してください。
+設計判断は [Engineering Principles](./docs/engineering-principles.md)、`src/features/` の依存方向と Feature の公開 API は [Architecture](./docs/architecture.md)、重要な判断記録は [ADR](./docs/adr/README.md)、公開判定は [Release Gate](./docs/release-gate.md) を参照してください。
 
 ## 開発規約
 
