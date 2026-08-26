@@ -1,11 +1,14 @@
 import { NextResponse } from 'next/server'
 
+import { isMetricRoute, type MetricRoute } from '@/lib/web-vitals'
+
 type Payload = {
   id: string
   name: string
   value: number
   rating: 'good' | 'needs-improvement' | 'poor'
   navigationType: string
+  route: MetricRoute
 }
 
 const MAX_BODY_BYTES = 1024
@@ -27,6 +30,7 @@ const expectedKeys = new Set([
   'value',
   'rating',
   'navigationType',
+  'route',
 ])
 
 class PayloadTooLargeError extends Error {}
@@ -45,8 +49,10 @@ function isSameOriginBrowserRequest(request: Request): boolean {
   const fetchSite = request.headers.get('sec-fetch-site')
   const origin = request.headers.get('origin')
 
-  // This endpoint is browser-only. Requiring browser request metadata prevents
-  // non-browser clients from bypassing both same-origin checks by omission.
+  // Origin metadata reduces accidental and ordinary cross-site submissions,
+  // but it is attacker-controlled outside a browser and is not authentication.
+  // Treat accepted metrics as untrusted and enforce distributed rate limits at
+  // the CDN/WAF boundary.
   if (!fetchSite && !origin) {
     return false
   }
@@ -60,7 +66,25 @@ function isSameOriginBrowserRequest(request: Request): boolean {
   }
 
   try {
-    return new URL(origin).origin === new URL(request.url).origin
+    const originValue = new URL(origin).origin
+    const requestUrl = new URL(request.url)
+    const candidateOrigins = new Set([requestUrl.origin])
+    const forwardedHost = request.headers
+      .get('x-forwarded-host')
+      ?.split(',', 1)[0]
+      ?.trim()
+    const host = forwardedHost || request.headers.get('host')
+
+    if (host) {
+      const forwardedProtocol = request.headers
+        .get('x-forwarded-proto')
+        ?.split(',', 1)[0]
+        ?.trim()
+      const protocol = forwardedProtocol || requestUrl.protocol.slice(0, -1)
+      candidateOrigins.add(new URL(`${protocol}://${host}`).origin)
+    }
+
+    return candidateOrigins.has(originValue)
   } catch {
     return false
   }
@@ -124,7 +148,8 @@ function isPayload(value: unknown): value is Payload {
     typeof candidate.rating === 'string' &&
     allowedRatings.has(candidate.rating) &&
     typeof candidate.navigationType === 'string' &&
-    allowedNavigationTypes.has(candidate.navigationType)
+    allowedNavigationTypes.has(candidate.navigationType) &&
+    isMetricRoute(candidate.route)
   )
 }
 

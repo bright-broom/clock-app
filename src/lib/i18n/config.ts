@@ -3,12 +3,6 @@ export type Locale = (typeof locales)[number]
 
 export const defaultLocale: Locale = 'ja'
 
-export const localeTimeZones: Record<Locale, string> = {
-  ja: 'Asia/Tokyo',
-  en: 'America/New_York',
-  es: 'Europe/Madrid',
-  pt: 'America/Sao_Paulo',
-  fr: 'Europe/Paris',
-  de: 'Europe/Berlin',
-  hi: 'Asia/Kolkata',
+export function isLocale(value: string): value is Locale {
+  return locales.some((locale) => locale === value)
 }

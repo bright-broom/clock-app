@@ -9,6 +9,7 @@ const validPayload = {
   value: 1234.5,
   rating: 'good',
   navigationType: 'navigate',
+  route: 'timer',
 }
 
 function request(body: string, headers: Record<string, string> = {}) {
@@ -55,6 +56,23 @@ describe('POST /api/web-vitals', () => {
     expect(response.status).toBe(403)
   })
 
+  it('accepts the public Host when the server URL uses an internal alias', async () => {
+    const response = await POST(
+      new Request('http://localhost:3000/api/web-vitals', {
+        method: 'POST',
+        body: JSON.stringify(validPayload),
+        headers: {
+          'Content-Type': 'application/json',
+          Host: '127.0.0.1:3000',
+          Origin: 'http://127.0.0.1:3000',
+          'Sec-Fetch-Site': 'same-origin',
+        },
+      })
+    )
+
+    expect(response.status).toBe(200)
+  })
+
   it('rejects an unsupported media type', async () => {
     const response = await POST(
       request(JSON.stringify(validPayload), { 'Content-Type': 'text/plain' })
@@ -72,6 +90,14 @@ describe('POST /api/web-vitals', () => {
   it('rejects unexpected fields and invalid values', async () => {
     const response = await POST(
       request(JSON.stringify({ ...validPayload, value: -1, injected: true }))
+    )
+
+    expect(response.status).toBe(400)
+  })
+
+  it('rejects a raw or unsupported route value', async () => {
+    const response = await POST(
+      request(JSON.stringify({ ...validPayload, route: '/ja/timer' }))
     )
 
     expect(response.status).toBe(400)

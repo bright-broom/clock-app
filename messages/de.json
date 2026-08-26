@@ -7,34 +7,44 @@
     "ogImageAlt": "Vorschaubild der Clock App mit digitaler Uhrzeit",
     "keywords": "online uhr,digitaluhr,lokale uhrzeit,aktuelle uhrzeit,echtzeit uhr"
   },
-  "weekdays": {
-    "sunday": "So",
-    "monday": "Mo",
-    "tuesday": "Di",
-    "wednesday": "Mi",
-    "thursday": "Do",
-    "friday": "Fr",
-    "saturday": "Sa"
-  },
   "time": {
     "currentTime": "Aktuelle Uhrzeit",
+    "loading": "Uhrzeit wird geladen",
+    "ariaLabel": "Aktuelle Uhrzeit: {hours} Stunden {minutes} Minuten {seconds} Sekunden"
+  },
+  "timer": {
+    "label": "Timer",
+    "remainingLabel": "Noch {hours} Stunden {minutes} Minuten {seconds} Sekunden",
+    "duration": "Dauer einstellen",
     "hours": "Stunden",
     "minutes": "Minuten",
     "seconds": "Sekunden",
-    "loading": "Uhrzeit wird geladen",
-    "ariaLabel": "Aktuelle Uhrzeit: {hours} Stunden {minutes} Minuten {seconds} Sekunden"
+    "presets": "Voreinstellungen",
+    "presetLabel": "{minutes} Min.",
+    "start": "Starten",
+    "pause": "Pausieren",
+    "resume": "Fortsetzen",
+    "reset": "Zurücksetzen",
+    "soundOn": "Abschlusston: ein",
+    "soundOff": "Abschlusston: aus",
+    "keyboardHint": "Leertaste: starten oder pausieren / R: zurücksetzen",
+    "backgroundNotice": "Der Abschlusston kann im Hintergrund verzögert sein",
+    "status": {
+      "idle": "Der Timer ist bereit",
+      "running": "Timer gestartet",
+      "paused": "Timer pausiert",
+      "completed": "Timer beendet"
+    }
   },
   "date": {
     "todaysDate": "Heutiges Datum"
   },
   "error": {
-    "clockError": "Beim Anzeigen der Uhr ist ein Fehler aufgetreten",
+    "featureError": "Beim Anzeigen dieser Funktion ist ein Fehler aufgetreten",
     "retry": "Erneut versuchen"
   },
   "languageSwitcher": {
     "label": "Sprache",
-    "switchTo": "Sprache wechseln zu {language}",
-    "fromTo": "{current} -> {next}",
     "languages": {
       "ja": "Japanisch",
       "en": "Englisch",
@@ -48,6 +58,7 @@
   "seoPages": {
     "home": {
       "heading": "Zeitwerkzeuge",
+      "timer": "Timer",
       "worldClock": "Weltuhr",
       "utcConverter": "UTC-Konverter",
       "timeInCity": "Uhrzeit in Tokio"
@@ -64,7 +75,14 @@
       "description": "Konvertieren Sie UTC-Datum und -Zeit in lokale Zeiten globaler Städte.",
       "backToHome": "Zurück zur Startseite",
       "utcDateTime": "UTC Datum und Uhrzeit",
+      "utcHint": "Der eingegebene Wert wird als UTC interpretiert.",
       "invalidDatetime": "Ungültiger Datums-/Zeitwert"
+    },
+    "timer": {
+      "title": "Online-Timer | Countdown",
+      "heading": "Timer",
+      "description": "Ein Countdown-Timer mit Start-, Pause-, Fortsetzen- und Zurücksetzen-Steuerung.",
+      "backToHome": "Zurück zur Startseite"
     },
     "timeInCity": {
       "title": "Aktuelle Uhrzeit in {city} | Digitaluhr",

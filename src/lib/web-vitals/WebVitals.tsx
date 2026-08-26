@@ -1,16 +1,20 @@
 'use client'
 
-import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
+import { useEffect, useRef } from 'react'
 import { onCLS, onFCP, onINP, onLCP, onTTFB } from 'web-vitals'
 import type { Metric } from 'web-vitals'
 
-function reportWebVitals(metric: Metric) {
+import { toMetricRoute, type MetricRoute } from './metricRoute'
+
+function reportWebVitals(metric: Metric, route: MetricRoute) {
   const body = JSON.stringify({
     id: metric.id,
     name: metric.name,
     value: metric.value,
     rating: metric.rating,
     navigationType: metric.navigationType,
+    route,
   })
 
   const sendWithFetch = () =>
@@ -36,12 +40,21 @@ function reportWebVitals(metric: Metric) {
 }
 
 export function WebVitals() {
+  const pathname = usePathname()
+  const route = toMetricRoute(pathname)
+  const routeRef = useRef(route)
+
   useEffect(() => {
-    onCLS(reportWebVitals)
-    onFCP(reportWebVitals)
-    onINP(reportWebVitals)
-    onLCP(reportWebVitals)
-    onTTFB(reportWebVitals)
+    routeRef.current = route
+  }, [route])
+
+  useEffect(() => {
+    const report = (metric: Metric) => reportWebVitals(metric, routeRef.current)
+    onCLS(report)
+    onFCP(report)
+    onINP(report)
+    onLCP(report)
+    onTTFB(report)
   }, [])
 
   return null

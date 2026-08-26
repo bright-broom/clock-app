@@ -7,9 +7,10 @@ import { memo, useEffect, useRef, useState } from 'react'
 import {
   CloseIcon,
   MenuIcon,
+  TimerIcon,
   UtcConverterIcon,
   WorldClockIcon,
-} from '@/components/ui'
+} from '@/components/ui/AppIcons'
 
 import { LanguageSwitcher } from './LanguageSwitcher'
 
@@ -92,6 +93,16 @@ export const HomeUtilityMenu = memo(function HomeUtilityMenu() {
             <li>
               <Link
                 ref={firstLinkRef}
+                href={`/${locale}/timer`}
+                className="group flex min-h-[44px] items-center gap-3 rounded-xl px-3 py-2 text-sm text-foreground-muted transition-colors hover:bg-background-overlay hover:text-foreground"
+                onClick={() => setOpen(false)}
+              >
+                <TimerIcon className="h-4 w-4 transition-[filter,opacity] duration-200 ease-out group-hover:opacity-100 group-hover:brightness-125" />
+                {t('timer')}
+              </Link>
+            </li>
+            <li>
+              <Link
                 href={`/${locale}/world-clock`}
                 className="group flex min-h-[44px] items-center gap-3 rounded-xl px-3 py-2 text-sm text-foreground-muted transition-colors hover:bg-background-overlay hover:text-foreground"
                 onClick={() => setOpen(false)}

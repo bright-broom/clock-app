@@ -10,20 +10,24 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:verify": "NEXT_PUBLIC_SITE_URL=https://clock.example next build",
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "review:architecture": "node scripts/architecture-review.mjs",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "verify": "npm run review:architecture && npm run type-check && npm run lint && npm run format:check && npm run test:coverage && npm run build:verify",
+    "verify:ci": "npm run verify && npm run test:e2e",
     "prepare": "husky"
   },
   "dependencies": {
     "critters": "^0.0.23",
-    "lucide-react": "^0.577.0",
     "next": "^16.3.0",
     "next-intl": "^4.13.6",
     "react": "^18.3.0",
@@ -31,6 +35,7 @@
     "web-vitals": "^5.1.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "@testing-library/jest-dom": "^6.4.0",
     "@testing-library/react": "^15.0.0",
     "@types/node": "^20.0.0",

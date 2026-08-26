@@ -22,10 +22,10 @@ npm run format       # Prettier
 ```text
 src/
 ├─ app/[locale]/          # Next.js routing
-├─ components/
-│  └─ {feature}/          # Component + test + barrel
+├─ features/
+│  └─ {feature}/          # Feature UI + model + public barrel
+├─ components/            # Shared UI + application shell
 ├─ lib/
-│  ├─ hooks/              # [client] @/lib/hooks (types colocated)
 │  ├─ i18n/               # localization config
 │  ├─ utils/              # pure functions
 │  ├─ web-vitals/         # [client] @/lib/web-vitals
@@ -37,11 +37,15 @@ src/
 ### Import Paths
 
 ```typescript
-import { Clock } from '@/components' // components
-import { formatLocalizedDate } from '@/lib' // server-safe utils
-import { useTime, type RawTimeState } from '@/lib/hooks' // client hooks + types
+import { Clock } from '@/features/clock' // feature public API
+import { HomeUtilityMenu } from '@/components/layout/HomeUtilityMenu' // shared component
+import { formatTimeInZone } from '@/lib/time' // server-safe time utilities
+import { useCurrentTime } from '@/lib/time/client' // explicit client entry
 import { WebVitals } from '@/lib/web-vitals' // client components
 ```
+
+Dependencies flow in one direction: `app -> features -> components -> lib`.
+Feature internals use relative imports. See `docs/architecture.md` for details.
 
 ---
 

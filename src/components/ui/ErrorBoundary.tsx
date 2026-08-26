@@ -40,7 +40,7 @@ class ErrorBoundaryInner extends Component<ErrorBoundaryInnerProps, State> {
             <button
               type="button"
               onClick={() => this.setState({ hasError: false })}
-              className="mt-4 rounded border border-border px-4 py-2 transition-colors hover:bg-background-overlay"
+              className="mt-4 min-h-[44px] rounded border border-border px-4 py-2 transition-colors hover:bg-background-overlay"
             >
               {this.props.retryText}
             </button>
@@ -68,7 +68,7 @@ export function ErrorBoundary({
 
   const innerProps: ErrorBoundaryInnerProps = {
     children,
-    errorMessage: t('clockError'),
+    errorMessage: t('featureError'),
     retryText: t('retry'),
   }
 

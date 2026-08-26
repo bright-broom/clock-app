@@ -119,29 +119,19 @@ export const UtcConverterIcon = memo(function UtcConverterIcon(
 })
 UtcConverterIcon.displayName = 'UtcConverterIcon'
 
-export const CityTimeIcon = memo(function CityTimeIcon(props: IconProps) {
+export const TimerIcon = memo(function TimerIcon(props: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
+      <circle cx="12" cy="13" r="7.5" stroke="currentColor" strokeWidth="1.7" />
       <path
-        d="M12 20s6-4.6 6-9.1A6 6 0 0 0 6 10.9C6 15.4 12 20 12 20Z"
+        d="M9 3h6M12 5.5V8m5.3-.8 1.4-1.4M12 13l2.6-2"
         stroke="currentColor"
         strokeWidth="1.7"
+        strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle
-        cx="12"
-        cy="10.5"
-        r="2.4"
-        stroke="currentColor"
-        strokeWidth="1.6"
-      />
-      <path
-        d="M12 10.5V9.2m0 1.3 1 0.7"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
+      <circle cx="12" cy="13" r="1.1" fill="currentColor" />
     </svg>
   )
 })
-CityTimeIcon.displayName = 'CityTimeIcon'
+TimerIcon.displayName = 'TimerIcon'

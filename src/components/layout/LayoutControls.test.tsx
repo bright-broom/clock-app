@@ -27,7 +27,11 @@ describe('HomeUtilityMenu', () => {
     fireEvent.click(trigger)
 
     expect(trigger).toHaveAttribute('aria-expanded', 'true')
-    expect(screen.getByRole('link', { name: '世界時計' })).toHaveFocus()
+    expect(screen.getByRole('link', { name: 'タイマー' })).toHaveFocus()
+    expect(screen.getByRole('link', { name: 'タイマー' })).toHaveAttribute(
+      'href',
+      '/ja/timer'
+    )
   })
 
   it('closes on Escape and restores focus to the trigger', () => {
@@ -42,7 +46,7 @@ describe('HomeUtilityMenu', () => {
     fireEvent.keyDown(document, { key: 'Escape' })
 
     expect(
-      screen.queryByRole('link', { name: '世界時計' })
+      screen.queryByRole('link', { name: 'タイマー' })
     ).not.toBeInTheDocument()
     expect(trigger).toHaveFocus()
   })

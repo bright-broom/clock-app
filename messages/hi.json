@@ -7,34 +7,44 @@
     "ogImageAlt": "डिजिटल समय दिखाती Clock App की प्रीव्यू इमेज",
     "keywords": "online clock,digital clock,local time,current time,real time clock"
   },
-  "weekdays": {
-    "sunday": "रवि",
-    "monday": "सोम",
-    "tuesday": "मंगल",
-    "wednesday": "बुध",
-    "thursday": "गुरु",
-    "friday": "शुक्र",
-    "saturday": "शनि"
-  },
   "time": {
     "currentTime": "वर्तमान समय",
+    "loading": "समय लोड हो रहा है",
+    "ariaLabel": "वर्तमान समय: {hours} घंटे {minutes} मिनट {seconds} सेकंड"
+  },
+  "timer": {
+    "label": "टाइमर",
+    "remainingLabel": "{hours} घंटे {minutes} मिनट {seconds} सेकंड शेष",
+    "duration": "अवधि सेट करें",
     "hours": "घंटे",
     "minutes": "मिनट",
     "seconds": "सेकंड",
-    "loading": "समय लोड हो रहा है",
-    "ariaLabel": "वर्तमान समय: {hours} घंटे {minutes} मिनट {seconds} सेकंड"
+    "presets": "प्रीसेट",
+    "presetLabel": "{minutes} मिनट",
+    "start": "शुरू करें",
+    "pause": "रोकें",
+    "resume": "फिर शुरू करें",
+    "reset": "रीसेट करें",
+    "soundOn": "समाप्ति ध्वनि: चालू",
+    "soundOff": "समाप्ति ध्वनि: बंद",
+    "keyboardHint": "Space: शुरू या रोकें / R: रीसेट करें",
+    "backgroundNotice": "बैकग्राउंड में समाप्ति ध्वनि देर से बज सकती है",
+    "status": {
+      "idle": "टाइमर तैयार है",
+      "running": "टाइमर शुरू हुआ",
+      "paused": "टाइमर रुका हुआ है",
+      "completed": "टाइमर पूरा हुआ"
+    }
   },
   "date": {
     "todaysDate": "आज की तारीख"
   },
   "error": {
-    "clockError": "घड़ी दिखाते समय एक त्रुटि हुई",
+    "featureError": "यह सुविधा दिखाते समय एक त्रुटि हुई",
     "retry": "फिर प्रयास करें"
   },
   "languageSwitcher": {
     "label": "भाषा",
-    "switchTo": "भाषा {language} में बदलें",
-    "fromTo": "{current} -> {next}",
     "languages": {
       "ja": "जापानी",
       "en": "अंग्रेज़ी",
@@ -48,6 +58,7 @@
   "seoPages": {
     "home": {
       "heading": "समय टूल्स",
+      "timer": "टाइमर",
       "worldClock": "विश्व घड़ी",
       "utcConverter": "UTC कन्वर्टर",
       "timeInCity": "टोक्यो का समय"
@@ -64,7 +75,14 @@
       "description": "UTC दिनांक और समय को वैश्विक शहरों के स्थानीय समय में बदलें।",
       "backToHome": "होम पर वापस जाएँ",
       "utcDateTime": "UTC दिनांक और समय",
+      "utcHint": "दर्ज किए गए मान को UTC माना जाता है।",
       "invalidDatetime": "अमान्य दिनांक/समय मान"
+    },
+    "timer": {
+      "title": "ऑनलाइन टाइमर | काउंटडाउन",
+      "heading": "टाइमर",
+      "description": "शुरू करने, रोकने, फिर शुरू करने और रीसेट करने के नियंत्रण वाला काउंटडाउन टाइमर।",
+      "backToHome": "होम पर वापस जाएँ"
     },
     "timeInCity": {
       "title": "{city} में वर्तमान समय | डिजिटल घड़ी",
