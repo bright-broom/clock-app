@@ -14,10 +14,10 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
       thresholds: {
-        statements: 45,
-        branches: 40,
-        functions: 40,
-        lines: 45,
+        statements: 80,
+        branches: 75,
+        functions: 75,
+        lines: 80,
       },
       include: ['src/**/*.{ts,tsx}'],
       exclude: [

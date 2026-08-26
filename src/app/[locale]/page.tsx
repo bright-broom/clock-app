@@ -1,9 +1,10 @@
 import { getTranslations } from 'next-intl/server'
 
-import { Clock, ErrorBoundary, HomeUtilityMenu } from '@/components'
+import { HomeUtilityMenu } from '@/components/layout/HomeUtilityMenu'
+import { ErrorBoundary } from '@/components/ui/ErrorBoundary'
+import { Clock } from '@/features/clock'
 import { serializeJsonLd } from '@/lib'
 import { getSiteUrl } from '@/lib/site'
-import { WebVitals } from '@/lib/web-vitals'
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -36,7 +37,6 @@ export default async function Home({ params }: Props) {
         <div className="clock-grid pointer-events-none absolute inset-0 opacity-35" />
         <div className="clock-orbit clock-orbit-outer pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full" />
         <div className="clock-orbit clock-orbit-inner pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full" />
-        <WebVitals />
         <h1 className="sr-only">{t('title')}</h1>
         <p className="sr-only">{t('description')}</p>
 

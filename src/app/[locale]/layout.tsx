@@ -4,8 +4,10 @@ import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations } from 'next-intl/server'
 
-import { locales, type Locale } from '@/lib'
+import { isLocale, locales, type Locale } from '@/lib'
+import { createLocalizedAlternates } from '@/lib/seo'
 import { getSiteUrl } from '@/lib/site'
+import { WebVitals } from '@/lib/web-vitals'
 
 import '../globals.css'
 
@@ -31,32 +33,22 @@ const OG_LOCALE_MAP: Record<Locale, string> = {
   hi: 'hi_IN',
 }
 
-const LOCALE_COUNTRY_LABELS: Record<Locale, string> = {
-  ja: 'Japan',
-  en: 'United States',
-  es: 'Spain',
-  pt: 'Brazil',
-  fr: 'France',
-  de: 'Germany',
-  hi: 'India',
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
+  if (!isLocale(locale)) {
+    notFound()
+  }
+
   const t = await getTranslations({ locale, namespace: 'metadata' })
   const siteUrl = getSiteUrl()
   const keywords = t('keywords')
     .split(',')
     .map((keyword) => keyword.trim())
     .filter(Boolean)
-  const currentLocale = locale as Locale
-  const ogLocale = OG_LOCALE_MAP[currentLocale]
+  const ogLocale = OG_LOCALE_MAP[locale]
   const alternateLocale = locales
-    .filter((entry) => entry !== currentLocale)
+    .filter((entry) => entry !== locale)
     .map((entry) => OG_LOCALE_MAP[entry])
-  const languageAlternates = Object.fromEntries(
-    locales.map((entry) => [entry, `/${entry}`])
-  )
   const googleSiteVerification =
     process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
   const bingSiteVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
@@ -70,21 +62,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         }
       : {}),
   }
-  const countryLabel = LOCALE_COUNTRY_LABELS[currentLocale]
-
   return {
     metadataBase: new URL(siteUrl),
     applicationName: t('appName'),
     title: {
-      default: `${t('title')} (${countryLabel})`,
-      template: `%s (${countryLabel})`,
+      default: t('title'),
+      template: `%s | ${t('appName')}`,
     },
     description: t('description'),
     keywords,
-    alternates: {
-      canonical: `/${locale}`,
-      languages: languageAlternates,
-    },
+    alternates: createLocalizedAlternates(siteUrl, locale),
     robots: {
       index: true,
       follow: true,
@@ -106,7 +93,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'website',
       images: [
         {
-          url: '/opengraph-image',
+          url: `${siteUrl}/${locale}/opengraph-image`,
           width: 1200,
           height: 630,
           alt: t('ogImageAlt'),
@@ -117,7 +104,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title: t('title'),
       description: t('description'),
-      images: ['/opengraph-image'],
+      images: [`${siteUrl}/${locale}/opengraph-image`],
     },
     verification,
   }
@@ -135,7 +122,7 @@ export function generateStaticParams() {
 
 export default async function RootLayout({ children, params }: Props) {
   const { locale } = await params
-  if (!locales.includes(locale as Locale)) {
+  if (!isLocale(locale)) {
     notFound()
   }
 
@@ -145,6 +132,7 @@ export default async function RootLayout({ children, params }: Props) {
     <html lang={locale} className={inter.variable}>
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
+          <WebVitals />
           {children}
         </NextIntlClientProvider>
       </body>

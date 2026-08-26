@@ -1,0 +1,1 @@
+export { createLocalizedAlternates } from './localizedAlternates'

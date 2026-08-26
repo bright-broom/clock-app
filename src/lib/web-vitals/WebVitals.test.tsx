@@ -4,6 +4,10 @@ import type { Metric } from 'web-vitals'
 
 import { WebVitals } from './WebVitals'
 
+vi.mock('next/navigation', () => ({
+  usePathname: () => '/ja/timer',
+}))
+
 const metric: Metric = {
   name: 'LCP',
   value: 1234,
@@ -28,8 +32,12 @@ describe('WebVitals', () => {
   })
 
   it('falls back to keepalive fetch when sendBeacon declines the payload', () => {
-    const sendBeacon = vi.fn(() => false)
-    const fetch = vi.fn(() => Promise.resolve(new Response()))
+    const sendBeacon = vi.fn(
+      (..._args: Parameters<Navigator['sendBeacon']>) => false
+    )
+    const fetch = vi.fn((..._args: Parameters<typeof globalThis.fetch>) =>
+      Promise.resolve(new Response())
+    )
     vi.stubGlobal('fetch', fetch)
     Object.defineProperty(navigator, 'sendBeacon', {
       configurable: true,
@@ -39,10 +47,13 @@ describe('WebVitals', () => {
     render(<WebVitals />)
 
     expect(sendBeacon).toHaveBeenCalledOnce()
+    const payload = sendBeacon.mock.calls[0]?.[1]
+    expect(payload).toBeInstanceOf(Blob)
     expect(fetch).toHaveBeenCalledWith(
       '/api/web-vitals',
       expect.objectContaining({ method: 'POST', keepalive: true })
     )
+    expect(fetch.mock.calls[0]?.[1]?.body).toContain('"route":"timer"')
   })
 
   it('does not duplicate a successful beacon with fetch', () => {

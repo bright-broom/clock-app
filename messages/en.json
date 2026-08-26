@@ -1,40 +1,50 @@
 {
   "metadata": {
     "title": "Online Digital Clock | Real-time Local Time",
-    "description": "A minimalist online digital clock that updates every second. Check local time instantly in Japanese or English.",
+    "description": "A minimalist online digital clock that updates every second. Check local time instantly in multiple languages.",
     "appName": "Clock App",
     "siteName": "Clock App",
     "ogImageAlt": "Clock App preview image showing digital time",
     "keywords": "online clock,digital clock,local time,current time,real-time clock,japanese clock,english clock"
   },
-  "weekdays": {
-    "sunday": "Sun",
-    "monday": "Mon",
-    "tuesday": "Tue",
-    "wednesday": "Wed",
-    "thursday": "Thu",
-    "friday": "Fri",
-    "saturday": "Sat"
-  },
   "time": {
     "currentTime": "Current time",
-    "hours": "hours",
-    "minutes": "minutes",
-    "seconds": "seconds",
     "loading": "Loading time",
     "ariaLabel": "Current time: {hours} hours {minutes} minutes {seconds} seconds"
+  },
+  "timer": {
+    "label": "Timer",
+    "remainingLabel": "{hours} hours {minutes} minutes {seconds} seconds remaining",
+    "duration": "Set duration",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds",
+    "presets": "Presets",
+    "presetLabel": "{minutes} min",
+    "start": "Start",
+    "pause": "Pause",
+    "resume": "Resume",
+    "reset": "Reset",
+    "soundOn": "Completion sound: on",
+    "soundOff": "Completion sound: off",
+    "keyboardHint": "Space: start or pause / R: reset",
+    "backgroundNotice": "The completion sound may be delayed in the background",
+    "status": {
+      "idle": "Timer is ready",
+      "running": "Timer started",
+      "paused": "Timer paused",
+      "completed": "Timer complete"
+    }
   },
   "date": {
     "todaysDate": "Today's date"
   },
   "error": {
-    "clockError": "An error occurred while displaying the clock",
+    "featureError": "An error occurred while displaying this feature",
     "retry": "Retry"
   },
   "languageSwitcher": {
     "label": "Language",
-    "switchTo": "Switch language to {language}",
-    "fromTo": "{current} -> {next}",
     "languages": {
       "ja": "Japanese",
       "en": "English",
@@ -52,6 +62,7 @@
   "seoPages": {
     "home": {
       "heading": "Explore time tools",
+      "timer": "Timer",
       "worldClock": "World Clock",
       "utcConverter": "UTC Converter",
       "timeInCity": "Time in Tokyo"
@@ -68,7 +79,14 @@
       "description": "Convert a UTC datetime to local time across global cities in one place.",
       "backToHome": "Back to clock home",
       "utcDateTime": "UTC Date Time",
+      "utcHint": "The entered value is interpreted as UTC.",
       "invalidDatetime": "Invalid datetime value"
+    },
+    "timer": {
+      "title": "Online Timer | Countdown Clock",
+      "heading": "Timer",
+      "description": "A focused countdown timer with start, pause, resume, and reset controls.",
+      "backToHome": "Back to clock home"
     },
     "timeInCity": {
       "title": "Current Time in {city} | Digital Clock",

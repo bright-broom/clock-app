@@ -17,7 +17,7 @@ jobs:
   quality:
     name: Quality, Security, and Build
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     env:
       NEXT_PUBLIC_SITE_URL: https://clock.example
     steps:
@@ -44,6 +44,9 @@ jobs:
       - name: Audit dependencies
         run: npm audit --audit-level=high
 
+      - name: Review architecture policy
+        run: npm run review:architecture
+
       - name: Run ESLint
         run: npm run lint
 
@@ -58,3 +61,9 @@ jobs:
 
       - name: Build production bundle
         run: npm run build
+
+      - name: Install Chromium for browser tests
+        run: npx playwright install --with-deps chromium
+
+      - name: Run browser regression tests
+        run: npm run test:e2e

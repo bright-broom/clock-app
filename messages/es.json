@@ -7,34 +7,44 @@
     "ogImageAlt": "Imagen de vista previa de Clock App mostrando la hora digital",
     "keywords": "reloj online,reloj digital,hora local,hora actual,reloj en tiempo real"
   },
-  "weekdays": {
-    "sunday": "dom",
-    "monday": "lun",
-    "tuesday": "mar",
-    "wednesday": "mié",
-    "thursday": "jue",
-    "friday": "vie",
-    "saturday": "sáb"
-  },
   "time": {
     "currentTime": "Hora actual",
-    "hours": "horas",
-    "minutes": "minutos",
-    "seconds": "segundos",
     "loading": "Cargando hora",
     "ariaLabel": "Hora actual: {hours} horas {minutes} minutos {seconds} segundos"
+  },
+  "timer": {
+    "label": "Temporizador",
+    "remainingLabel": "Quedan {hours} horas {minutes} minutos {seconds} segundos",
+    "duration": "Configurar duración",
+    "hours": "Horas",
+    "minutes": "Minutos",
+    "seconds": "Segundos",
+    "presets": "Preajustes",
+    "presetLabel": "{minutes} min",
+    "start": "Iniciar",
+    "pause": "Pausar",
+    "resume": "Reanudar",
+    "reset": "Restablecer",
+    "soundOn": "Sonido de finalización: activado",
+    "soundOff": "Sonido de finalización: desactivado",
+    "keyboardHint": "Espacio: iniciar o pausar / R: restablecer",
+    "backgroundNotice": "El sonido de finalización puede retrasarse en segundo plano",
+    "status": {
+      "idle": "El temporizador está listo",
+      "running": "Temporizador iniciado",
+      "paused": "Temporizador pausado",
+      "completed": "Temporizador finalizado"
+    }
   },
   "date": {
     "todaysDate": "Fecha de hoy"
   },
   "error": {
-    "clockError": "Se produjo un error al mostrar el reloj",
+    "featureError": "Se produjo un error al mostrar esta función",
     "retry": "Reintentar"
   },
   "languageSwitcher": {
     "label": "Idioma",
-    "switchTo": "Cambiar idioma a {language}",
-    "fromTo": "{current} -> {next}",
     "languages": {
       "ja": "Japonés",
       "en": "Inglés",
@@ -48,6 +58,7 @@
   "seoPages": {
     "home": {
       "heading": "Herramientas de tiempo",
+      "timer": "Temporizador",
       "worldClock": "Reloj mundial",
       "utcConverter": "Conversor UTC",
       "timeInCity": "Hora en Tokio"
@@ -64,7 +75,14 @@
       "description": "Convierte una fecha y hora UTC a la hora local de ciudades globales.",
       "backToHome": "Volver al inicio",
       "utcDateTime": "Fecha y hora UTC",
+      "utcHint": "El valor introducido se interpreta como UTC.",
       "invalidDatetime": "Valor de fecha y hora no válido"
+    },
+    "timer": {
+      "title": "Temporizador online | Cuenta regresiva",
+      "heading": "Temporizador",
+      "description": "Un temporizador de cuenta regresiva con controles para iniciar, pausar, reanudar y restablecer.",
+      "backToHome": "Volver al inicio"
     },
     "timeInCity": {
       "title": "Hora actual en {city} | Reloj digital",

@@ -5,8 +5,8 @@ import { useLocale, useTranslations } from 'next-intl'
 import { useEffect, useRef } from 'react'
 import type { KeyboardEvent as ReactKeyboardEvent } from 'react'
 
-import { EarthIcon } from '@/components/ui'
-import { locales, type Locale } from '@/lib'
+import { EarthIcon } from '@/components/ui/AppIcons'
+import { isLocale, locales, type Locale } from '@/lib'
 
 type Props = {
   open: boolean
@@ -16,9 +16,7 @@ type Props = {
 export function LanguageSwitcher({ open, onOpenChange }: Props) {
   const rawLocale = useLocale()
   const t = useTranslations('languageSwitcher')
-  const locale: Locale = locales.includes(rawLocale as Locale)
-    ? (rawLocale as Locale)
-    : locales[0]
+  const locale = isLocale(rawLocale) ? rawLocale : locales[0]
   const router = useRouter()
   const pathname = usePathname()
   const containerRef = useRef<HTMLDivElement>(null)
