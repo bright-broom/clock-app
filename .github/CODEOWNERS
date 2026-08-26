@@ -1,4 +1,8 @@
 * @bright-broom
 /.github/ @bright-broom
 /AGENTS.md @bright-broom
+/architecture-policy.json @bright-broom
 /docs/architecture.md @bright-broom
+/docs/engineering-principles.md @bright-broom
+/docs/adr/ @bright-broom
+/scripts/ @bright-broom

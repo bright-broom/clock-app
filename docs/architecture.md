@@ -2,6 +2,8 @@
 
 Clock App は、依存方向を明示した feature-first 構成を採用します。
 
+設計判断の共通基準は [Engineering Principles](./engineering-principles.md)、重要な変更の記録方法は [ADR](./adr/README.md) を参照してください。
+
 ```text
 app  ───────────────→ features ───────────────→ components ─────→ lib
  │                         │                         │               ↑

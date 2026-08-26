@@ -54,6 +54,10 @@ Feature root `index.ts`. See `docs/architecture.md`.
 
 ## Automated Principal Review
 
+`docs/engineering-principles.md` is the source of truth for engineering
+decisions. For every software creation, change, or bug fix, use both
+`$senior-review-remediation-loop` and `$ai-development-security-guardrails`.
+
 For every software change, run a cross-cutting review before handoff:
 
 1. Design: responsibility, dependency direction, state ownership, reversibility.
@@ -65,6 +69,22 @@ For every software change, run a cross-cutting review before handoff:
 
 Do not automatically Push, Merge, Deploy, change Repository protection, grant
 permissions, or weaken a quality gate. Report those as Human approval items.
+
+### Policy Automation
+
+- Do not pursue zero hardcoding. Reject unexplained magic values, duplicated
+  configuration, embedded environment values, and raw design colors.
+- Keep stable domain and protocol constraints as named, typed constants with
+  boundary tests.
+- Externalize a value only when it varies by environment or has a documented
+  no-deploy operational owner. Validate external configuration fail-closed.
+- Blocking rules must be deterministic, low-noise, actionable, and enforced by
+  `npm run review:architecture`. Subjective design advice remains advisory.
+- Temporary exceptions belong in `architecture-policy.json` with a reason,
+  owner, compensating control, and expiry within 90 days. Expired exceptions
+  fail CI. Security rules cannot be exempted.
+- Significant boundary, state ownership, persistence, external-service, or
+  irreversible decisions require an ADR under `docs/adr/`.
 
 ---
 
