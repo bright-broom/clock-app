@@ -63,7 +63,24 @@ test('keeps the timer within a mobile viewport', async ({ page }) => {
   await page.goto('/ja/timer')
 
   await expect(page.getByRole('timer')).toBeVisible()
+  await page.getByLabel('分', { exact: true }).fill('12')
+  const increaseSeconds = page.getByRole('button', { name: '秒を増やす' })
+  await increaseSeconds.click()
+  await expect(page.getByRole('timer')).toHaveAttribute(
+    'aria-label',
+    '残り 00 時間 12 分 01 秒'
+  )
+
+  const stepTarget = await increaseSeconds.boundingBox()
+  expect(stepTarget).not.toBeNull()
+  expect(stepTarget?.width).toBeGreaterThanOrEqual(44)
+  expect(stepTarget?.height).toBeGreaterThanOrEqual(44)
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth)
   ).toBeLessThanOrEqual(390)
+
+  const scrollDistance = await page.evaluate(
+    () => document.documentElement.scrollHeight - window.innerHeight
+  )
+  expect(scrollDistance).toBeLessThanOrEqual(160)
 })

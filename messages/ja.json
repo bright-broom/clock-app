@@ -19,6 +19,8 @@
     "hours": "時",
     "minutes": "分",
     "seconds": "秒",
+    "increaseField": "{field}を増やす",
+    "decreaseField": "{field}を減らす",
     "presets": "プリセット",
     "presetLabel": "{minutes} 分",
     "start": "開始",

@@ -57,6 +57,60 @@ describe('Timer', () => {
     expect(screen.getByRole('button', { name: '一時停止' })).toBeEnabled()
   })
 
+  it('accepts direct numeric input and clamps each duration field', () => {
+    renderTimer()
+    const hours = screen.getByLabelText('時')
+    const minutes = screen.getByLabelText('分')
+    const seconds = screen.getByLabelText('秒')
+
+    expect(hours).toHaveAttribute('inputmode', 'numeric')
+    fireEvent.change(hours, { target: { value: '2' } })
+    fireEvent.change(minutes, { target: { value: '30' } })
+    fireEvent.change(seconds, { target: { value: '15' } })
+
+    expect(screen.getByRole('timer')).toHaveAttribute(
+      'aria-label',
+      '残り 02 時間 30 分 15 秒'
+    )
+
+    fireEvent.change(minutes, { target: { value: '99' } })
+    expect(minutes).toHaveValue(59)
+    expect(screen.getByRole('timer')).toHaveAttribute(
+      'aria-label',
+      '残り 02 時間 59 分 15 秒'
+    )
+  })
+
+  it('provides large step controls and keeps presets available', () => {
+    renderTimer()
+
+    expect(screen.getByRole('button', { name: '5 分' })).toHaveAttribute(
+      'aria-pressed',
+      'true'
+    )
+    fireEvent.click(screen.getByRole('button', { name: '分を増やす' }))
+    expect(screen.getByLabelText('分')).toHaveValue(6)
+
+    fireEvent.click(screen.getByRole('button', { name: '分を減らす' }))
+    expect(screen.getByLabelText('分')).toHaveValue(5)
+
+    fireEvent.click(screen.getByRole('button', { name: '10 分' }))
+    expect(screen.getByLabelText('分')).toHaveValue(10)
+    expect(screen.getByRole('button', { name: '10 分' })).toHaveAttribute(
+      'aria-pressed',
+      'true'
+    )
+  })
+
+  it('disables direct and step input while running', () => {
+    renderTimer()
+    fireEvent.click(screen.getByRole('button', { name: '開始' }))
+
+    expect(screen.getByLabelText('分')).toBeDisabled()
+    expect(screen.getByRole('button', { name: '分を増やす' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: '10 分' })).toBeDisabled()
+  })
+
   it('pauses, resumes, and resets', () => {
     renderTimer()
     fireEvent.click(screen.getByRole('button', { name: '開始' }))
