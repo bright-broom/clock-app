@@ -27,13 +27,13 @@ export const TimerDisplay = memo(function TimerDisplay({
 
   return (
     <div
-      className="relative mx-auto grid aspect-square w-[min(72vw,24rem)] place-items-center rounded-full p-px transition-[background] duration-300 motion-reduce:transition-none"
+      className="relative mx-auto grid aspect-square w-[min(64vw,38svh,21rem)] place-items-center rounded-full p-px transition-[background] duration-300 motion-reduce:transition-none"
       style={progressStyle}
       data-status={status}
     >
       <div className="grid h-full w-full place-items-center rounded-full bg-background">
         <p
-          className="font-mono text-[clamp(2.8rem,11vw,5.8rem)] font-extralight leading-none tracking-[-0.045em] text-foreground"
+          className="font-mono text-[clamp(2.2rem,9vw,4.8rem)] font-extralight leading-none tracking-[-0.045em] text-foreground"
           role="timer"
           aria-live="off"
           aria-label={t('remainingLabel', { hours, minutes, seconds })}

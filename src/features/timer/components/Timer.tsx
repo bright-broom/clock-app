@@ -89,39 +89,46 @@ export const Timer = memo(function Timer() {
   }
 
   return (
-    <div className="text-center">
-      <TimerDisplay
-        durationMs={state.durationMs}
-        remainingMs={state.remainingMs}
-        status={state.status}
-      />
-      <p className="mt-4 text-sm text-foreground-muted">
-        {t(`status.${state.status}`)}
-      </p>
-      <DurationPicker
-        durationMs={state.durationMs}
-        disabled={state.status === 'running'}
-        onChange={actions.setDuration}
-      />
-      <TimerControls
-        status={state.status}
-        canStart={state.durationMs > 0}
-        onStart={start}
-        onPause={actions.pause}
-        onReset={actions.reset}
-      />
-      <button
-        type="button"
-        aria-pressed={soundEnabled}
-        onClick={() => setSoundEnabled((enabled) => !enabled)}
-        className="mt-4 min-h-[44px] rounded-full px-4 text-xs text-foreground-muted transition-colors hover:bg-background-overlay hover:text-foreground"
-      >
-        {soundEnabled ? t('soundOn') : t('soundOff')}
-      </button>
-      <p className="mt-2 text-xs text-foreground-muted">{t('keyboardHint')}</p>
-      <p className="mt-1 text-xs text-foreground-disabled">
-        {t('backgroundNotice')}
-      </p>
+    <div className="mx-auto grid max-w-4xl items-center gap-x-8 gap-y-4 lg:grid-cols-[minmax(16rem,0.9fr)_minmax(22rem,1.1fr)]">
+      <div className="text-center">
+        <TimerDisplay
+          durationMs={state.durationMs}
+          remainingMs={state.remainingMs}
+          status={state.status}
+        />
+        <p className="mt-2 text-sm text-foreground-muted">
+          {t(`status.${state.status}`)}
+        </p>
+      </div>
+
+      <div className="mx-auto w-full max-w-xl text-center">
+        <DurationPicker
+          durationMs={state.durationMs}
+          disabled={state.status === 'running'}
+          onChange={actions.setDuration}
+        />
+        <TimerControls
+          status={state.status}
+          canStart={state.durationMs > 0}
+          onStart={start}
+          onPause={actions.pause}
+          onReset={actions.reset}
+        />
+        <button
+          type="button"
+          aria-pressed={soundEnabled}
+          onClick={() => setSoundEnabled((enabled) => !enabled)}
+          className="mt-3 min-h-[44px] touch-manipulation rounded-full px-4 text-xs text-foreground-muted transition-colors hover:bg-background-overlay hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
+        >
+          {soundEnabled ? t('soundOn') : t('soundOff')}
+        </button>
+        <p className="mt-1 text-xs text-foreground-muted">
+          {t('keyboardHint')}
+        </p>
+        <p className="mt-0.5 text-xs text-foreground-disabled">
+          {t('backgroundNotice')}
+        </p>
+      </div>
       <p className="sr-only" aria-live="polite" aria-atomic="true">
         {announcement}
       </p>

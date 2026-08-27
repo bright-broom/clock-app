@@ -19,6 +19,8 @@
     "hours": "Horas",
     "minutes": "Minutos",
     "seconds": "Segundos",
+    "increaseField": "Aumentar {field}",
+    "decreaseField": "Diminuir {field}",
     "presets": "Predefinições",
     "presetLabel": "{minutes} min",
     "start": "Iniciar",

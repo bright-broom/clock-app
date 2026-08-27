@@ -19,6 +19,8 @@
     "hours": "घंटे",
     "minutes": "मिनट",
     "seconds": "सेकंड",
+    "increaseField": "{field} बढ़ाएँ",
+    "decreaseField": "{field} घटाएँ",
     "presets": "प्रीसेट",
     "presetLabel": "{minutes} मिनट",
     "start": "शुरू करें",
