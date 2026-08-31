@@ -1,16 +1,26 @@
 # Clock App
 
-Next.js 製の多言語デジタル時計／タイマーアプリです。表示言語とは独立して、ブラウザのタイムゾーンを基準に現在時刻を表示します。
+Next.js 製の多言語デジタル時計／タイマー／ストップウォッチアプリです。表示言語とは独立して、ブラウザのタイムゾーンを基準に現在時刻を表示します。
 
 ## 機能
 
 - リアルタイム時刻表示
 - 日付表示（年月日・曜日）
 - カウントダウンタイマー（開始・一時停止・再開・完了音）
+- ストップウォッチ（開始・一時停止・再開・リセット）
 - 世界時計・都市別時刻表示
 - UTC から各都市のローカル時刻への変換
 - 多言語対応（日本語・英語・ドイツ語・スペイン語・フランス語・ヒンディー語・ポルトガル語）
 - アクセシビリティ対応
+
+### 計時と通知の動作契約
+
+- タイマーは Client-side Route 遷移と Reload を越えて復元され、Timer 画面を離れている間も
+  Countdown を継続します。Browser が完了音を拒否した場合は、画面上の完了状態を正本とします。
+- 完了音の On／Off は Browser に保存されます。同じ Timer を複数 Tab で開いた場合は、対応
+  Browser では 1 Tab だけが完了音を再生します。
+- ストップウォッチは System Clock の変更に影響されない単調時計を使います。Client-side Route
+  遷移では継続しますが、Full Page Reload では 0 に戻ります。
 
 ## 技術スタック
 
@@ -41,6 +51,7 @@ npm run dev
 `.env.example` を元に作成した `.env.local` へ、環境ごとの値を設定してください。Secret は Repository に Commit しないでください。
 
 - `NEXT_PUBLIC_SITE_URL`: 本番ドメイン（canonical / sitemap / robots に使用）。本番ビルドでは必須
+- `WEB_VITALS_INGESTION_ENABLED`: CDN／WAF の Rate Limit 検証後にのみ本番で `true`。未設定時は本番受信を拒否
 - `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`: Google Search Console 検証トークン（任意）
 - `NEXT_PUBLIC_BING_SITE_VERIFICATION`: Bing Webmaster 検証トークン（任意）
 
@@ -85,6 +96,7 @@ src/
 ├── app/[locale]/      # ルーティング
 ├── features/          # 機能単位のUI・状態・ユースケース
 │   ├── clock/
+│   ├── stopwatch/
 │   ├── timer/
 │   ├── utc-converter/
 │   └── world-clock/
