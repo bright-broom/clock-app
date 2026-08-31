@@ -1,30 +1,53 @@
 # Clock App
 
-Next.js 製の多言語デジタル時計／タイマー／ストップウォッチアプリです。表示言語とは独立して、ブラウザのタイムゾーンを基準に現在時刻を表示します。
+黄金比を取り入れた、Next.js 製の多言語時刻ツールです。デジタル時計、タイマー、ストップウォッチ、世界時計、UTC 変換を 1 つのレスポンシブな UI で提供します。
 
-## 機能
+## 主な機能
 
-- リアルタイム時刻表示
-- 日付表示（年月日・曜日）
-- カウントダウンタイマー（開始・一時停止・再開・完了音）
-- ストップウォッチ（開始・一時停止・再開・リセット）
-- 世界時計・都市別時刻表示
-- UTC から各都市のローカル時刻への変換
-- 多言語対応（日本語・英語・ドイツ語・スペイン語・フランス語・ヒンディー語・ポルトガル語）
-- アクセシビリティ対応
+| 機能             | 内容                                                                                              |
+| ---------------- | ------------------------------------------------------------------------------------------------- |
+| デジタル時計     | ブラウザのタイムゾーンを基準に、現在時刻と日付をリアルタイム表示                                  |
+| タイマー         | 既定 15 分、1／5／15 分のプリセット、時・分・秒の直接入力、開始・一時停止・再開・リセット、完了音 |
+| ストップウォッチ | 0.1 秒単位の表示、開始・一時停止・再開・リセット                                                  |
+| 世界時計         | 世界の主要都市の現在時刻を一覧表示                                                                |
+| UTC 変換         | 入力した UTC 日時を各都市のローカル時刻へ変換                                                     |
 
-### 計時と通知の動作契約
+- 日本語、英語、スペイン語、ポルトガル語、フランス語、ドイツ語、ヒンディー語に対応
+- モノクロ／CorpIT の 2 種類のカラーテーマに対応
+- Desktop／Mobile のレスポンシブレイアウト
+- Keyboard、Touch、Screen Reader、Reduced Motion に配慮
+- 時刻表示を囲む円形 UI と、黄金比に基づく Typography／Spacing を採用
 
-- タイマーは Client-side Route 遷移と Reload を越えて復元され、Timer 画面を離れている間も
-  Countdown を継続します。Browser が完了音を拒否した場合は、画面上の完了状態を正本とします。
-- 完了音の On／Off は Browser に保存されます。同じ Timer を複数 Tab で開いた場合は、対応
-  Browser では 1 Tab だけが完了音を再生します。
-- ストップウォッチは System Clock の変更に影響されない単調時計を使います。Client-side Route
-  遷移では継続しますが、Full Page Reload では 0 に戻ります。
+### タイマー
+
+- 設定範囲は 0 秒から 24 時間です。0 秒では開始できません。
+- `Space` で開始／一時停止／再開、`R` でリセットできます。入力欄や Button の操作中は Shortcut を発火しません。
+- Client-side Route 遷移や Reload を越えて Countdown を復元し、Timer 画面を離れている間も完了判定を継続します。
+- 完了音の On／Off は Browser に保存されます。複数 Tab の重複再生は Web Locks と Browser Storage で抑止しますが、両方を利用できない環境では Best Effort です。
+- Browser の Autoplay Policy、Background Throttling、端末の Sleep 状態によって、完了音が再生されない、または遅れる場合があります。画面上の完了状態を正本とします。
+- Countdown は端末の時刻を基準にするため、計測中に System Clock を変更すると残り時間へ影響します。精密計測用途は対象外です。
+
+### ストップウォッチ
+
+- 同一 Browser Runtime 内では、System Clock の変更に影響されない単調時計を使用します。
+- Client-side Route 遷移後も計測を継続します。
+- Full Page Reload は新しい計測 Session として扱い、表示を 0 に戻します。
+
+### カラーテーマ
+
+- `minimal`（モノクロ）を既定 Theme、`corpit` を追加 Theme として提供します。
+- 選択内容は Browser Storage に保存し、Reload 後に復元します。
+- Theme 値は型付き Allowlist で検証し、不正値や Storage 障害時は既定 Theme へ安全に戻します。
+- Product UI は Semantic Color Token のみを参照し、Theme 固有色を Feature へ直接埋め込みません。
 
 ## 技術スタック
 
-Next.js 16 / React 18 / TypeScript 5 / Tailwind CSS 3 / next-intl / Vitest / Playwright
+- Next.js 16 / React 18 / TypeScript 5
+- Tailwind CSS 3 / next-intl
+- Vitest / Testing Library / Playwright
+- ESLint / Prettier / Husky
+
+Version の正本は [`package.json`](./package.json) と [`package-lock.json`](./package-lock.json) です。
 
 ## セットアップ
 
@@ -32,8 +55,6 @@ Next.js 16 / React 18 / TypeScript 5 / Tailwind CSS 3 / next-intl / Vitest / Pla
 
 - Node.js 24.x
 - npm 10.9.9
-
-`package.json` と `package-lock.json` を正本とし、依存関係は固定された npm Version で再現します。
 
 ```bash
 nvm use
@@ -48,29 +69,32 @@ npm run dev
 
 ### 環境変数
 
-`.env.example` を元に作成した `.env.local` へ、環境ごとの値を設定してください。Secret は Repository に Commit しないでください。
+`.env.example` を元に `.env.local` を作成します。Secret や環境固有値は Repository に Commit しないでください。
 
-- `NEXT_PUBLIC_SITE_URL`: 本番ドメイン（canonical / sitemap / robots に使用）。本番ビルドでは必須
-- `WEB_VITALS_INGESTION_ENABLED`: CDN／WAF の Rate Limit 検証後にのみ本番で `true`。未設定時は本番受信を拒否
-- `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`: Google Search Console 検証トークン（任意）
-- `NEXT_PUBLIC_BING_SITE_VERIFICATION`: Bing Webmaster 検証トークン（任意）
+| 変数                                   | 必須         | 用途                                                                               |
+| -------------------------------------- | ------------ | ---------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`                 | 本番では必須 | canonical、sitemap、robots に使用する承認済み HTTPS Origin                         |
+| `WEB_VITALS_INGESTION_ENABLED`         | 任意         | CDN／WAF の Rate Limit 検証後にのみ本番で `true`。未設定または不正値では受信を拒否 |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | 任意         | Google Search Console の検証 Token                                                 |
+| `NEXT_PUBLIC_BING_SITE_VERIFICATION`   | 任意         | Bing Webmaster Tools の検証 Token                                                  |
 
-## スクリプト
+## 開発コマンド
 
 | コマンド                      | 説明                                                   |
 | ----------------------------- | ------------------------------------------------------ |
-| `npm run dev`                 | 開発サーバー                                           |
-| `npm run build`               | ビルド                                                 |
-| `npm run build:verify`        | 検証用 URL で Production Build                         |
-| `npm run test:run`            | テスト                                                 |
-| `npm run test:coverage`       | カバレッジ閾値付きテスト                               |
-| `npm run test:e2e`            | Production Build のブラウザ回帰テスト                  |
-| `npm run lint`                | Lint                                                   |
-| `npm run type-check`          | 型チェック                                             |
-| `npm run format`              | フォーマット                                           |
-| `npm run review:architecture` | 依存方向と設計規約の自動レビュー                       |
+| `npm run dev`                 | 開発サーバーを起動                                     |
+| `npm run build`               | Production Build を作成                                |
+| `npm run build:verify`        | 検証用 URL で Production Build を作成                  |
+| `npm run start`               | Production Server を起動                               |
+| `npm run test:run`            | Unit／Component Test を実行                            |
+| `npm run test:coverage`       | Coverage 閾値付き Test を実行                          |
+| `npm run test:e2e`            | Chromium の Browser 回帰 Test を実行                   |
+| `npm run lint`                | ESLint を実行                                          |
+| `npm run type-check`          | TypeScript の型検査を実行                              |
+| `npm run format:check`        | Prettier の差分を検査                                  |
+| `npm run review:architecture` | 依存方向と設計 Policy を検査                           |
 | `npm run verify`              | Architecture、型、Lint、Format、Test、Build を一括検証 |
-| `npm run verify:ci`           | `verify` とブラウザ回帰テストを一括実行                |
+| `npm run verify:ci`           | `verify` と Browser 回帰 Test を一括実行               |
 
 Pull Request の作成前は、CI と同じ npm Version で次を実行します。
 
@@ -80,64 +104,52 @@ npm run verify:ci
 npm audit --audit-level=high
 ```
 
-## 依存関係の更新方針
-
-- `package.json` と `package-lock.json` は同じ Pull Request で更新し、`npm ci` で再現性を確認します。
-- `--force` や `--legacy-peer-deps` で Peer Dependency の不整合を回避しません。互換性のある Version の組み合わせへ修正します。
-- Dependabot は毎週月曜日 09:00（JST）に確認し、開発依存関係の minor／patch Update をまとめて提案します。
-- 通常の major Version Update は自動提案から除外し、Framework、Type、Lint、Test の互換性を確認する個別 Pull Request で扱います。
-- [`update-types` は Security Update に影響しない GitHub 公式仕様](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference#update-types-allow)に基づき、Security Update の自動提案は停止しません。
-- Merge 判定は、Review 対象と同じ Commit SHA で `npm ci`、CI、Preview が成功していることを条件とします。
-
 ## プロジェクト構造
 
 ```text
 src/
-├── app/[locale]/      # ルーティング
-├── features/          # 機能単位のUI・状態・ユースケース
+├── app/                 # Next.js Route、Metadata、API Adapter
+│   ├── [locale]/        # Locale 別 Page
+│   └── api/web-vitals/  # Web Vitals 受信境界
+├── features/            # 機能単位の UI・状態・Use Case
 │   ├── clock/
 │   ├── stopwatch/
 │   ├── timer/
 │   ├── utc-converter/
 │   └── world-clock/
-├── components/        # 機能に依存しない共有UI
+├── components/          # 機能に依存しない共有 UI
 │   ├── layout/
+│   ├── theme/
 │   └── ui/
-├── lib/               # 共通基盤・ユーティリティ
+├── lib/                 # Server-safe な共通基盤・純粋関数
 │   ├── i18n/
 │   ├── seo/
 │   ├── time/
 │   ├── utils/
 │   └── web-vitals/
-├── test/              # テストユーティリティ
-└── types/             # Global Declaration のみ
+├── test/                # Test 共通基盤
+└── types/               # Global Declaration のみ
 ```
 
-設計判断は [Engineering Principles](./docs/engineering-principles.md)、`src/features/` の依存方向と Feature の公開 API は [Architecture](./docs/architecture.md)、重要な判断記録は [ADR](./docs/adr/README.md)、公開判定は [Release Gate](./docs/release-gate.md) を参照してください。
+依存方向は `app -> features -> components -> lib` です。Feature の外部利用者は `src/features/<feature>/index.ts` だけを公開 API として参照します。
 
-## 開発規約
+## 設計・運用の正本
 
-[AGENTS.md](./AGENTS.md) を正本として参照してください。[CLAUDE.md](./CLAUDE.md) は、同じ規約への案内に限定しています。
+| 領域                 | Document                                                   |
+| -------------------- | ---------------------------------------------------------- |
+| 開発規約             | [AGENTS.md](./AGENTS.md)                                   |
+| Engineering 判断基準 | [Engineering Principles](./docs/engineering-principles.md) |
+| 責務と依存方向       | [Architecture](./docs/architecture.md)                     |
+| 重要な設計判断       | [ADR](./docs/adr/README.md)                                |
+| Release 判定         | [Release Gate](./docs/release-gate.md)                     |
+| SEO／公開導線        | [Growth Launch Playbook](./docs/growth-launch-playbook.md) |
 
-## SEO 運用チェックリスト
+README は導入と全体像を扱います。詳細な設計・Release・Growth 手順は上記 Document を正本とし、重複して管理しません。
 
-1. 本番で `NEXT_PUBLIC_SITE_URL` を承認済みの HTTPS Origin へ設定
-2. `https://<domain>/sitemap.xml` と `https://<domain>/robots.txt` の公開確認
-3. Google Search Console にプロパティ登録して sitemap 送信
-4. Bing Webmaster Tools に登録して sitemap 送信
-5. Search Console の Core Web Vitals レポートを継続監視
-6. 公開導線:
-   - Product Hunt のローンチページ作成
-   - Reddit (`r/webdev`, `r/productivity`) 投稿
-   - Hacker News Show HN 投稿
-   - Qiita / Zenn / Dev.to で機能紹介記事を公開
+## 依存関係の更新方針
 
-## リリース・運用チェックリスト
-
-1. Node.js 24.x / npm 10.9.9 と `npm ci` を使用する
-2. `NEXT_PUBLIC_SITE_URL` を承認済みの本番 HTTPS Origin へ設定する
-3. Pull Request で Review 対象と同じ Commit SHA の CI と Preview Deployment を成功させ、画面・レスポンシブ・キーボード操作を確認する
-4. `/api/web-vitals` に CDN／WAF の分散レート制限を設定する（アプリ内の同一オリジン検証だけで代替しない）
-5. 構造化された `web_vital` / エラーログがホスティング基盤に取り込まれることを確認し、秘密情報や個人情報を記録しない
-6. 本番反映前に変更承認とロールバック対象コミットを確認する
-7. 反映後に主要 URL、Security Header、sitemap、robots、Web Vitals 受信を確認する
+- `package.json` と `package-lock.json` は同じ Pull Request で更新し、`npm ci` で再現性を確認します。
+- `--force` や `--legacy-peer-deps` で Peer Dependency の不整合を回避しません。
+- Dependabot は毎週月曜日 09:00（JST）に確認し、開発依存関係の minor／patch Update をまとめて提案します。
+- 通常の major Version Update は自動提案から除外し、互換性を確認する個別 Pull Request で扱います。
+- Merge 判定は、Review 対象と同じ Commit SHA で必須 CI と Preview が成功していることを条件とします。
