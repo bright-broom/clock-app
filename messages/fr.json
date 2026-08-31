@@ -15,7 +15,6 @@
   "timer": {
     "label": "Minuteur",
     "remainingLabel": "Il reste {hours} heures {minutes} minutes {seconds} secondes",
-    "duration": "Définir la durée",
     "hours": "Heures",
     "minutes": "Minutes",
     "seconds": "Secondes",
@@ -29,13 +28,24 @@
     "reset": "Réinitialiser",
     "soundOn": "Son de fin : activé",
     "soundOff": "Son de fin : désactivé",
-    "keyboardHint": "Espace : démarrer ou mettre en pause / R : réinitialiser",
-    "backgroundNotice": "Le son de fin peut être retardé en arrière-plan",
+    "soundUnavailable": "Le son de fin est indisponible",
     "status": {
-      "idle": "Le minuteur est prêt",
       "running": "Minuteur démarré",
       "paused": "Minuteur en pause",
       "completed": "Minuteur terminé"
+    }
+  },
+  "stopwatch": {
+    "label": "Chronomètre",
+    "elapsedLabel": "Temps écoulé : {hours} heures {minutes} minutes {seconds} secondes et {tenths} dixièmes",
+    "start": "Démarrer",
+    "pause": "Mettre en pause",
+    "resume": "Reprendre",
+    "reset": "Réinitialiser",
+    "status": {
+      "idle": "Chronomètre réinitialisé",
+      "running": "Chronomètre démarré",
+      "paused": "Chronomètre en pause"
     }
   },
   "date": {
@@ -57,10 +67,19 @@
       "hi": "Hindi"
     }
   },
+  "colorThemeSwitcher": {
+    "label": "Thème de couleur",
+    "change": "Thème de couleur : {current}. Passer à {next}",
+    "themes": {
+      "minimal": "Monochrome",
+      "corpit": "CorpIT"
+    }
+  },
   "seoPages": {
     "home": {
       "heading": "Outils d'heure",
       "timer": "Minuteur",
+      "stopwatch": "Chronomètre",
       "worldClock": "Horloge mondiale",
       "utcConverter": "Convertisseur UTC",
       "timeInCity": "Heure à Tokyo"
@@ -84,6 +103,12 @@
       "title": "Minuteur en ligne | Compte à rebours",
       "heading": "Minuteur",
       "description": "Un minuteur avec commandes de démarrage, pause, reprise et réinitialisation.",
+      "backToHome": "Retour à l'accueil"
+    },
+    "stopwatch": {
+      "title": "Chronomètre en ligne | Mesurer le temps écoulé",
+      "heading": "Chronomètre",
+      "description": "Un chronomètre en ligne avec commandes de démarrage, pause, reprise et réinitialisation.",
       "backToHome": "Retour à l'accueil"
     },
     "timeInCity": {

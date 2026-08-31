@@ -98,6 +98,15 @@ describe('nextTickDelay', () => {
 })
 
 describe('createTimerState', () => {
+  it('defaults to fifteen minutes', () => {
+    expect(createTimerState()).toEqual({
+      status: 'idle',
+      durationMs: 15 * 60 * 1000,
+      endsAt: null,
+      remainingMs: 15 * 60 * 1000,
+    })
+  })
+
   it('starts idle with remaining equal to the duration', () => {
     expect(createTimerState(60_000)).toEqual({
       status: 'idle',

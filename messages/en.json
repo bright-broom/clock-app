@@ -15,7 +15,6 @@
   "timer": {
     "label": "Timer",
     "remainingLabel": "{hours} hours {minutes} minutes {seconds} seconds remaining",
-    "duration": "Set duration",
     "hours": "Hours",
     "minutes": "Minutes",
     "seconds": "Seconds",
@@ -29,13 +28,24 @@
     "reset": "Reset",
     "soundOn": "Completion sound: on",
     "soundOff": "Completion sound: off",
-    "keyboardHint": "Space: start or pause / R: reset",
-    "backgroundNotice": "The completion sound may be delayed in the background",
+    "soundUnavailable": "Completion sound is unavailable",
     "status": {
-      "idle": "Timer is ready",
       "running": "Timer started",
       "paused": "Timer paused",
       "completed": "Timer complete"
+    }
+  },
+  "stopwatch": {
+    "label": "Stopwatch",
+    "elapsedLabel": "Elapsed time: {hours} hours {minutes} minutes {seconds}.{tenths} seconds",
+    "start": "Start",
+    "pause": "Pause",
+    "resume": "Resume",
+    "reset": "Reset",
+    "status": {
+      "idle": "Stopwatch reset",
+      "running": "Stopwatch started",
+      "paused": "Stopwatch paused"
     }
   },
   "date": {
@@ -57,6 +67,14 @@
       "hi": "Hindi"
     }
   },
+  "colorThemeSwitcher": {
+    "label": "Color theme",
+    "change": "Color theme: {current}. Switch to {next}",
+    "themes": {
+      "minimal": "Monochrome",
+      "corpit": "CorpIT"
+    }
+  },
   "menu": {
     "open": "Open menu",
     "close": "Close menu"
@@ -65,6 +83,7 @@
     "home": {
       "heading": "Explore time tools",
       "timer": "Timer",
+      "stopwatch": "Stopwatch",
       "worldClock": "World Clock",
       "utcConverter": "UTC Converter",
       "timeInCity": "Time in Tokyo"
@@ -88,6 +107,12 @@
       "title": "Online Timer | Countdown Clock",
       "heading": "Timer",
       "description": "A focused countdown timer with start, pause, resume, and reset controls.",
+      "backToHome": "Back to clock home"
+    },
+    "stopwatch": {
+      "title": "Online Stopwatch | Measure Elapsed Time",
+      "heading": "Stopwatch",
+      "description": "A focused online stopwatch with start, pause, resume, and reset controls.",
       "backToHome": "Back to clock home"
     },
     "timeInCity": {

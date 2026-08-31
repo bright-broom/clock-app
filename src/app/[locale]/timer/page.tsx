@@ -40,7 +40,7 @@ export default async function TimerPage({ params }: Props) {
       backHref={`/${locale}`}
       backLabel={t('backToHome')}
       heading={t('heading')}
-      description={t('description')}
+      layout="focused"
     >
       <Timer />
     </ToolPageShell>

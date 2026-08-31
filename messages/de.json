@@ -15,7 +15,6 @@
   "timer": {
     "label": "Timer",
     "remainingLabel": "Noch {hours} Stunden {minutes} Minuten {seconds} Sekunden",
-    "duration": "Dauer einstellen",
     "hours": "Stunden",
     "minutes": "Minuten",
     "seconds": "Sekunden",
@@ -29,13 +28,24 @@
     "reset": "Zurücksetzen",
     "soundOn": "Abschlusston: ein",
     "soundOff": "Abschlusston: aus",
-    "keyboardHint": "Leertaste: starten oder pausieren / R: zurücksetzen",
-    "backgroundNotice": "Der Abschlusston kann im Hintergrund verzögert sein",
+    "soundUnavailable": "Der Abschlusston ist nicht verfügbar",
     "status": {
-      "idle": "Der Timer ist bereit",
       "running": "Timer gestartet",
       "paused": "Timer pausiert",
       "completed": "Timer beendet"
+    }
+  },
+  "stopwatch": {
+    "label": "Stoppuhr",
+    "elapsedLabel": "Verstrichene Zeit: {hours} Stunden {minutes} Minuten {seconds} Sekunden und {tenths} Zehntel",
+    "start": "Starten",
+    "pause": "Pausieren",
+    "resume": "Fortsetzen",
+    "reset": "Zurücksetzen",
+    "status": {
+      "idle": "Stoppuhr zurückgesetzt",
+      "running": "Stoppuhr gestartet",
+      "paused": "Stoppuhr pausiert"
     }
   },
   "date": {
@@ -57,10 +67,19 @@
       "hi": "Hindi"
     }
   },
+  "colorThemeSwitcher": {
+    "label": "Farbthema",
+    "change": "Farbthema: {current}. Zu {next} wechseln",
+    "themes": {
+      "minimal": "Monochrom",
+      "corpit": "CorpIT"
+    }
+  },
   "seoPages": {
     "home": {
       "heading": "Zeitwerkzeuge",
       "timer": "Timer",
+      "stopwatch": "Stoppuhr",
       "worldClock": "Weltuhr",
       "utcConverter": "UTC-Konverter",
       "timeInCity": "Uhrzeit in Tokio"
@@ -84,6 +103,12 @@
       "title": "Online-Timer | Countdown",
       "heading": "Timer",
       "description": "Ein Countdown-Timer mit Start-, Pause-, Fortsetzen- und Zurücksetzen-Steuerung.",
+      "backToHome": "Zurück zur Startseite"
+    },
+    "stopwatch": {
+      "title": "Online-Stoppuhr | Verstrichene Zeit messen",
+      "heading": "Stoppuhr",
+      "description": "Eine Online-Stoppuhr mit Start-, Pause-, Fortsetzen- und Zurücksetzen-Steuerung.",
       "backToHome": "Zurück zur Startseite"
     },
     "timeInCity": {

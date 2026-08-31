@@ -12,11 +12,14 @@ describe('sitemap', () => {
     vi.stubEnv('NEXT_PUBLIC_SITE_URL', 'https://clock.example')
 
     const entries = sitemap()
-    const expectedCount = locales.length * (4 + cityTimeZones.length)
+    const expectedCount = locales.length * (5 + cityTimeZones.length)
 
     expect(entries).toHaveLength(expectedCount)
     expect(entries).toContainEqual(
       expect.objectContaining({ url: 'https://clock.example/ja/timer' })
+    )
+    expect(entries).toContainEqual(
+      expect.objectContaining({ url: 'https://clock.example/ja/stopwatch' })
     )
     expect(entries).toContainEqual(
       expect.objectContaining({

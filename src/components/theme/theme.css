@@ -1,0 +1,85 @@
+:root {
+  --color-bg-primary: 0 0% 0%;
+  --color-bg-overlay: 0 0% 100% / 0.1;
+  --color-bg-overlay-strong: 0 0% 100% / 0.2;
+
+  --color-fg-primary: 0 0% 100%;
+  --color-fg-muted: 0 0% 100% / 0.5;
+  --color-fg-disabled: 0 0% 100% / 0.2;
+
+  --color-border-default: 0 0% 100% / 0.2;
+  --color-shadow: 0 0% 100% / 0.1;
+
+  --color-primary: 0 0% 100%;
+  --color-primary-foreground: 0 0% 0%;
+  --color-accent: 0 0% 100%;
+  --color-accent-foreground: 0 0% 0%;
+  --color-ring: 0 0% 100%;
+  --color-status-running: 0 0% 100%;
+}
+
+html.light {
+  --color-bg-primary: 0 0% 100%;
+  --color-bg-overlay: 0 0% 0% / 0.05;
+  --color-bg-overlay-strong: 0 0% 0% / 0.1;
+
+  --color-fg-primary: 0 0% 0%;
+  --color-fg-muted: 0 0% 0% / 0.5;
+  --color-fg-disabled: 0 0% 0% / 0.2;
+
+  --color-border-default: 0 0% 0% / 0.2;
+  --color-shadow: 0 0% 0% / 0.1;
+
+  --color-primary: 0 0% 0%;
+  --color-primary-foreground: 0 0% 100%;
+  --color-accent: 0 0% 0%;
+  --color-accent-foreground: 0 0% 100%;
+  --color-ring: 0 0% 0%;
+  --color-status-running: 0 0% 0%;
+}
+
+/*
+ * CorpIT palette reference:
+ * Main #192639, Sub #18897A, Accent #0CF8C0.
+ * Interactive dark-theme teal is adjusted to #147D70 for accessible white
+ * labels. Meaningful state boundaries use the higher-contrast accent token.
+ */
+html[data-color-theme='corpit'] {
+  --color-bg-primary: 216 39% 16%;
+  --color-bg-overlay: 172 70% 32% / 0.14;
+  --color-bg-overlay-strong: 172 70% 32% / 0.24;
+
+  --color-fg-primary: 160 100% 98%;
+  --color-fg-muted: 166 26% 78%;
+  --color-fg-disabled: 166 26% 78% / 0.42;
+
+  --color-border-default: 172 70% 32% / 0.58;
+  --color-shadow: 166 94% 51% / 0.22;
+
+  --color-primary: 173 72% 28%;
+  --color-primary-foreground: 0 0% 100%;
+  --color-accent: 166 94% 51%;
+  --color-accent-foreground: 216 39% 16%;
+  --color-ring: 166 94% 51%;
+  --color-status-running: 166 94% 51%;
+}
+
+html.light[data-color-theme='corpit'] {
+  --color-bg-primary: 165 33% 98%;
+  --color-bg-overlay: 172 70% 32% / 0.07;
+  --color-bg-overlay-strong: 172 70% 32% / 0.13;
+
+  --color-fg-primary: 216 39% 16%;
+  --color-fg-muted: 173 15% 33%;
+  --color-fg-disabled: 173 15% 33% / 0.42;
+
+  --color-border-default: 172 70% 32% / 0.34;
+  --color-shadow: 172 73% 27% / 0.18;
+
+  --color-primary: 173 73% 27%;
+  --color-primary-foreground: 0 0% 100%;
+  --color-accent: 166 94% 51%;
+  --color-accent-foreground: 216 39% 16%;
+  --color-ring: 173 73% 27%;
+  --color-status-running: 173 73% 27%;
+}

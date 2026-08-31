@@ -24,6 +24,10 @@ Private Repository で設定できない項目がある場合は、契約 Plan �
 - Production Deployment は CI 成功後の承認操作に限定する。
 - Preview で確認した Commit SHA と同じ Artifact／SHA を昇格する。
 - `/api/web-vitals` は CDN／WAF で分散 Rate Limit を適用する。
+- CDN／WAF の設定と動作 Evidence を確認した後に限り、Production の
+  `WEB_VITALS_INGESTION_ENABLED=true` を承認する。未設定・不正値は受信を拒否する。
+- Application 内の固定 Window 制限は Instance 単位の防御層であり、CDN／WAF の
+  分散 Rate Limit の代替として扱わない。
 - Rollback は既知の正常 Commit へ戻し、再 Deploy 後に Smoke Test を行う。
 
 ## Evidence

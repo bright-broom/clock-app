@@ -6,6 +6,7 @@ describe('metric route classification', () => {
   it.each([
     ['/ja', 'home'],
     ['/en/timer', 'timer'],
+    ['/ja/stopwatch', 'stopwatch'],
     ['/fr/world-clock', 'world-clock'],
     ['/de/utc-converter', 'utc-converter'],
     ['/pt/time-in/sao-paulo', 'time-in-city'],
@@ -20,6 +21,7 @@ describe('metric route classification', () => {
 
   it('validates only supported route identifiers', () => {
     expect(isMetricRoute('timer')).toBe(true)
+    expect(isMetricRoute('stopwatch')).toBe(true)
     expect(isMetricRoute('/ja/timer')).toBe(false)
   })
 })

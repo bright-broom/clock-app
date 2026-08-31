@@ -15,7 +15,6 @@
   "timer": {
     "label": "टाइमर",
     "remainingLabel": "{hours} घंटे {minutes} मिनट {seconds} सेकंड शेष",
-    "duration": "अवधि सेट करें",
     "hours": "घंटे",
     "minutes": "मिनट",
     "seconds": "सेकंड",
@@ -29,13 +28,24 @@
     "reset": "रीसेट करें",
     "soundOn": "समाप्ति ध्वनि: चालू",
     "soundOff": "समाप्ति ध्वनि: बंद",
-    "keyboardHint": "Space: शुरू या रोकें / R: रीसेट करें",
-    "backgroundNotice": "बैकग्राउंड में समाप्ति ध्वनि देर से बज सकती है",
+    "soundUnavailable": "समाप्ति ध्वनि उपलब्ध नहीं है",
     "status": {
-      "idle": "टाइमर तैयार है",
       "running": "टाइमर शुरू हुआ",
       "paused": "टाइमर रुका हुआ है",
       "completed": "टाइमर पूरा हुआ"
+    }
+  },
+  "stopwatch": {
+    "label": "स्टॉपवॉच",
+    "elapsedLabel": "बीता समय: {hours} घंटे {minutes} मिनट {seconds} सेकंड और {tenths} दशमांश",
+    "start": "शुरू करें",
+    "pause": "रोकें",
+    "resume": "फिर शुरू करें",
+    "reset": "रीसेट करें",
+    "status": {
+      "idle": "स्टॉपवॉच रीसेट हुई",
+      "running": "स्टॉपवॉच शुरू हुई",
+      "paused": "स्टॉपवॉच रुकी हुई है"
     }
   },
   "date": {
@@ -57,10 +67,19 @@
       "hi": "हिन्दी"
     }
   },
+  "colorThemeSwitcher": {
+    "label": "रंग थीम",
+    "change": "रंग थीम: {current}। {next} पर बदलें",
+    "themes": {
+      "minimal": "मोनोक्रोम",
+      "corpit": "CorpIT"
+    }
+  },
   "seoPages": {
     "home": {
       "heading": "समय टूल्स",
       "timer": "टाइमर",
+      "stopwatch": "स्टॉपवॉच",
       "worldClock": "विश्व घड़ी",
       "utcConverter": "UTC कन्वर्टर",
       "timeInCity": "टोक्यो का समय"
@@ -84,6 +103,12 @@
       "title": "ऑनलाइन टाइमर | काउंटडाउन",
       "heading": "टाइमर",
       "description": "शुरू करने, रोकने, फिर शुरू करने और रीसेट करने के नियंत्रण वाला काउंटडाउन टाइमर।",
+      "backToHome": "होम पर वापस जाएँ"
+    },
+    "stopwatch": {
+      "title": "ऑनलाइन स्टॉपवॉच | बीता समय मापें",
+      "heading": "स्टॉपवॉच",
+      "description": "शुरू करने, रोकने, फिर शुरू करने और रीसेट करने के नियंत्रण वाली ऑनलाइन स्टॉपवॉच।",
       "backToHome": "होम पर वापस जाएँ"
     },
     "timeInCity": {

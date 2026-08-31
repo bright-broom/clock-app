@@ -9,32 +9,18 @@
     --ratio-secondary: 0.382;
     --ratio-tertiary: 0.236;
 
-    --color-bg-primary: 0 0% 0%;
-    --color-bg-overlay: 0 0% 100% / 0.1;
-    --color-bg-overlay-strong: 0 0% 100% / 0.2;
-
-    --color-fg-primary: 0 0% 100%;
-    --color-fg-muted: 0 0% 100% / 0.5;
-    --color-fg-disabled: 0 0% 100% / 0.2;
-
-    --color-border-default: 0 0% 100% / 0.2;
-
-    --color-shadow: 0 0% 100% / 0.1;
+    --layout-primary: 61.8%;
+    --layout-supporting: 38.2%;
+    --layout-gutter: clamp(1.236rem, 2.36vw, 2.618rem);
+    --layout-stage-gutter: clamp(1.5rem, 3.82vw, 3.82rem);
+    --layout-control-clearance: clamp(4.75rem, 8vw, 6.18rem);
+    --layout-cluster-gap: clamp(1.618rem, 3.82vw, 2.618rem);
+    --layout-panel-radius: 1.618rem;
+    --layout-card-radius: 1.236rem;
+    --layout-content-max: 80rem;
   }
 
   html.light {
-    --color-bg-primary: 0 0% 100%;
-    --color-bg-overlay: 0 0% 0% / 0.05;
-    --color-bg-overlay-strong: 0 0% 0% / 0.1;
-
-    --color-fg-primary: 0 0% 0%;
-    --color-fg-muted: 0 0% 0% / 0.5;
-    --color-fg-disabled: 0 0% 0% / 0.2;
-
-    --color-border-default: 0 0% 0% / 0.2;
-
-    --color-shadow: 0 0% 0% / 0.1;
-
     color-scheme: light;
   }
 
@@ -47,6 +33,9 @@
     background-color: hsl(var(--color-bg-primary));
     color: hsl(var(--color-fg-primary));
     min-height: 100svh;
+    transition:
+      background-color 220ms ease-out,
+      color 220ms ease-out;
   }
 }
 
@@ -89,21 +78,65 @@
     );
   }
 
+  .golden-guides {
+    background-image:
+      linear-gradient(
+        90deg,
+        transparent calc(var(--layout-supporting) - 0.5px),
+        hsl(var(--color-accent) / 0.2) calc(var(--layout-supporting) - 0.5px),
+        hsl(var(--color-accent) / 0.2) calc(var(--layout-supporting) + 0.5px),
+        transparent calc(var(--layout-supporting) + 0.5px)
+      ),
+      linear-gradient(
+        90deg,
+        transparent calc(var(--layout-primary) - 0.5px),
+        hsl(var(--color-accent) / 0.2) calc(var(--layout-primary) - 0.5px),
+        hsl(var(--color-accent) / 0.2) calc(var(--layout-primary) + 0.5px),
+        transparent calc(var(--layout-primary) + 0.5px)
+      ),
+      linear-gradient(
+        transparent calc(var(--layout-supporting) - 0.5px),
+        hsl(var(--color-accent) / 0.16) calc(var(--layout-supporting) - 0.5px),
+        hsl(var(--color-accent) / 0.16) calc(var(--layout-supporting) + 0.5px),
+        transparent calc(var(--layout-supporting) + 0.5px)
+      ),
+      linear-gradient(
+        transparent calc(var(--layout-primary) - 0.5px),
+        hsl(var(--color-accent) / 0.16) calc(var(--layout-primary) - 0.5px),
+        hsl(var(--color-accent) / 0.16) calc(var(--layout-primary) + 0.5px),
+        transparent calc(var(--layout-primary) + 0.5px)
+      );
+    mask-image: radial-gradient(
+      ellipse at center,
+      black 14.6%,
+      transparent 76.4%
+    );
+  }
+
+  .timer-dial {
+    container-type: inline-size;
+    width: min(64vw, 42svh, 21rem, 100%);
+  }
+
+  .timer-dial-value {
+    font-size: clamp(2rem, 20cqi, 4.8rem);
+  }
+
   .clock-ambient {
     background:
       radial-gradient(
         circle at 50% 38.2%,
-        hsl(var(--color-fg-primary) / 0.075),
+        hsl(var(--color-primary) / 0.16),
         transparent 38.2%
       ),
       radial-gradient(
         circle at 14.6% 9%,
-        hsl(var(--color-fg-primary) / 0.05),
+        hsl(var(--color-accent) / 0.08),
         transparent 23.6%
       ),
       radial-gradient(
         circle at 85.4% 91%,
-        hsl(var(--color-fg-primary) / 0.04),
+        hsl(var(--color-primary) / 0.1),
         transparent 23.6%
       );
   }
@@ -131,6 +164,10 @@
 }
 
 @layer components {
+  .golden-panel-grid {
+    display: grid;
+  }
+
   .colon-pulse {
     animation: colon-pulse 1.618s cubic-bezier(0.382, 0, 0.618, 1) infinite;
     will-change: opacity;
@@ -180,7 +217,17 @@
   }
 }
 
+@media (min-width: 80rem) {
+  .golden-panel-grid {
+    grid-template-columns: var(--layout-supporting) var(--layout-primary);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  body {
+    transition: none;
+  }
+
   .colon-pulse {
     animation: none;
   }

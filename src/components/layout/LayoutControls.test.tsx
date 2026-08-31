@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { IntlWrapper } from '@/test'
 
@@ -16,6 +16,11 @@ vi.mock('next/navigation', () => ({
 }))
 
 describe('HomeUtilityMenu', () => {
+  beforeEach(() => {
+    window.localStorage.clear()
+    document.documentElement.dataset.colorTheme = 'minimal'
+  })
+
   it('exposes its expanded state and focuses the first tool', () => {
     render(
       <IntlWrapper locale="ja">
@@ -32,6 +37,9 @@ describe('HomeUtilityMenu', () => {
       'href',
       '/ja/timer'
     )
+    expect(
+      screen.getByRole('link', { name: 'ストップウォッチ' })
+    ).toHaveAttribute('href', '/ja/stopwatch')
   })
 
   it('closes on Escape and restores focus to the trigger', () => {
@@ -88,5 +96,24 @@ describe('HomeUtilityMenu', () => {
     fireEvent.click(screen.getByRole('option', { name: '英語 en' }))
 
     expect(navigation.push).toHaveBeenCalledWith('/en')
+  })
+
+  it('changes and persists the global color theme', () => {
+    render(
+      <IntlWrapper locale="ja">
+        <HomeUtilityMenu />
+      </IntlWrapper>
+    )
+
+    const switcher = screen.getByRole('button', {
+      name: 'カラーテーマ：モノクロ。CorpITに変更',
+    })
+    fireEvent.click(switcher)
+
+    expect(document.documentElement.dataset.colorTheme).toBe('corpit')
+    expect(window.localStorage.getItem('clock-app:color-theme')).toBe('corpit')
+    expect(switcher).toHaveAccessibleName(
+      'カラーテーマ：CorpIT。モノクロに変更'
+    )
   })
 })
