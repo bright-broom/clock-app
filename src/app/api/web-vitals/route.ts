@@ -2,6 +2,13 @@ import { NextResponse } from 'next/server'
 
 import { isMetricRoute, type MetricRoute } from '@/lib/web-vitals'
 
+import {
+  createFixedWindowRateLimiter,
+  isWebVitalsIngestionEnabled,
+  WEB_VITALS_RATE_LIMIT_MAX_REQUESTS,
+  WEB_VITALS_RATE_LIMIT_WINDOW_MS,
+} from './ingestionPolicy'
+
 type Payload = {
   id: string
   name: string
@@ -35,12 +42,21 @@ const expectedKeys = new Set([
 
 class PayloadTooLargeError extends Error {}
 
-function jsonResponse(ok: boolean, status: number) {
+const localRateLimiter = createFixedWindowRateLimiter(
+  WEB_VITALS_RATE_LIMIT_MAX_REQUESTS,
+  WEB_VITALS_RATE_LIMIT_WINDOW_MS
+)
+
+function jsonResponse(
+  ok: boolean,
+  status: number,
+  headers: Record<string, string> = {}
+) {
   return NextResponse.json(
     { ok },
     {
       status,
-      headers: { 'Cache-Control': 'no-store' },
+      headers: { 'Cache-Control': 'no-store', ...headers },
     }
   )
 }
@@ -154,6 +170,10 @@ function isPayload(value: unknown): value is Payload {
 }
 
 export async function POST(request: Request) {
+  if (!isWebVitalsIngestionEnabled()) {
+    return jsonResponse(false, 503)
+  }
+
   if (!isSameOriginBrowserRequest(request)) {
     return jsonResponse(false, 403)
   }
@@ -163,6 +183,13 @@ export async function POST(request: Request) {
     contentType?.split(';', 1)[0]?.trim().toLowerCase() !== 'application/json'
   ) {
     return jsonResponse(false, 415)
+  }
+
+  const rateLimit = localRateLimiter.tryConsume()
+  if (!rateLimit.allowed) {
+    return jsonResponse(false, 429, {
+      'Retry-After': String(rateLimit.retryAfterSeconds),
+    })
   }
 
   try {
@@ -190,4 +217,8 @@ export async function POST(request: Request) {
       error instanceof PayloadTooLargeError ? 413 : 400
     )
   }
+}
+
+export function __resetWebVitalsRateLimit() {
+  localRateLimiter.reset()
 }

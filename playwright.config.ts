@@ -28,7 +28,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: `npm run start -- -p ${port}`,
+    command: `WEB_VITALS_INGESTION_ENABLED=true npm run start -- -p ${port}`,
     url: `${baseURL}/ja`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

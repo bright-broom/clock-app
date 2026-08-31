@@ -1,6 +1,7 @@
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { POST } from './route'
+import { WEB_VITALS_RATE_LIMIT_MAX_REQUESTS } from './ingestionPolicy'
+import { __resetWebVitalsRateLimit, POST } from './route'
 
 const endpoint = 'https://clock.example/api/web-vitals'
 const validPayload = {
@@ -26,6 +27,14 @@ function request(body: string, headers: Record<string, string> = {}) {
 }
 
 describe('POST /api/web-vitals', () => {
+  beforeEach(() => {
+    __resetWebVitalsRateLimit()
+  })
+
+  afterEach(() => {
+    vi.unstubAllEnvs()
+  })
+
   it('accepts a bounded same-origin metric', async () => {
     const response = await POST(request(JSON.stringify(validPayload)))
 
@@ -101,5 +110,31 @@ describe('POST /api/web-vitals', () => {
     )
 
     expect(response.status).toBe(400)
+  })
+
+  it('fails closed when ingestion is explicitly disabled', async () => {
+    vi.stubEnv('WEB_VITALS_INGESTION_ENABLED', 'false')
+
+    const response = await POST(request(JSON.stringify(validPayload)))
+
+    expect(response.status).toBe(503)
+  })
+
+  it('bounds accepted work per application instance', async () => {
+    const log = vi.spyOn(console, 'info').mockImplementation(() => undefined)
+
+    for (
+      let index = 0;
+      index < WEB_VITALS_RATE_LIMIT_MAX_REQUESTS;
+      index += 1
+    ) {
+      const response = await POST(request(JSON.stringify(validPayload)))
+      expect(response.status).toBe(200)
+    }
+
+    const rejected = await POST(request(JSON.stringify(validPayload)))
+    expect(rejected.status).toBe(429)
+    expect(rejected.headers.get('retry-after')).toBeTruthy()
+    log.mockRestore()
   })
 })
