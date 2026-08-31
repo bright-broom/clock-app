@@ -4,9 +4,11 @@ import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
 import { memo, useEffect, useRef, useState } from 'react'
 
+import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher'
 import {
   CloseIcon,
   MenuIcon,
+  StopwatchIcon,
   TimerIcon,
   UtcConverterIcon,
   WorldClockIcon,
@@ -52,9 +54,15 @@ export const HomeUtilityMenu = memo(function HomeUtilityMenu() {
   return (
     <div
       ref={containerRef}
-      className="absolute right-[clamp(1.236rem,2.36vw,2.618rem)] top-[clamp(1.236rem,2.36vw,2.618rem)] z-20 flex flex-col items-end"
+      className="absolute right-[var(--layout-gutter)] top-[var(--layout-gutter)] z-20 flex flex-col items-end"
     >
       <div className="flex items-center justify-end gap-2">
+        <ThemeSwitcher
+          onChange={() => {
+            setLanguageOpen(false)
+            setOpen(false)
+          }}
+        />
         <LanguageSwitcher
           open={languageOpen}
           onOpenChange={(nextOpen) => {
@@ -99,6 +107,16 @@ export const HomeUtilityMenu = memo(function HomeUtilityMenu() {
               >
                 <TimerIcon className="h-4 w-4 transition-[filter,opacity] duration-200 ease-out group-hover:opacity-100 group-hover:brightness-125" />
                 {t('timer')}
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={`/${locale}/stopwatch`}
+                className="group flex min-h-[44px] items-center gap-3 rounded-xl px-3 py-2 text-sm text-foreground-muted transition-colors hover:bg-background-overlay hover:text-foreground"
+                onClick={() => setOpen(false)}
+              >
+                <StopwatchIcon className="h-4 w-4 transition-[filter,opacity] duration-200 ease-out group-hover:opacity-100 group-hover:brightness-125" />
+                {t('stopwatch')}
               </Link>
             </li>
             <li>

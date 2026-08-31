@@ -3,42 +3,48 @@
 import { useTranslations } from 'next-intl'
 import { memo, useEffect, useRef, useState } from 'react'
 
+import { isInteractiveEventTarget } from '@/components/ui/isInteractiveEventTarget'
+
 import { toTimerParts } from '../model/timerMachine'
 import { useTimer } from '../model/useTimer'
 import { useTimerAlarm } from '../model/useTimerAlarm'
 
 import { DurationPicker } from './DurationPicker'
+import { SoundToggleButton } from './SoundToggleButton'
 import { TimerControls } from './TimerControls'
 import { TimerDisplay } from './TimerDisplay'
-
-function isInteractiveTarget(target: EventTarget | null): boolean {
-  return (
-    target instanceof Element &&
-    target.closest(
-      'a[href], button, input, select, textarea, summary, [contenteditable="true"], [role="button"], [role="link"], [role="checkbox"], [role="radio"], [role="switch"], [role="slider"], [role="spinbutton"], [role="textbox"], [role="combobox"], [role="menuitem"], [role="tab"], [role="option"]'
-    ) !== null
-  )
-}
 
 export const Timer = memo(function Timer() {
   const t = useTranslations('timer')
   const { state, actions } = useTimer()
   const [announcement, setAnnouncement] = useState('')
-  const [soundEnabled, setSoundEnabled] = useState(true)
   const previousStatus = useRef(state.status)
-  const { play: playAlarm, prepare: prepareAlarm } = useTimerAlarm(soundEnabled)
+  const {
+    availability: alarmAvailability,
+    enabled: soundEnabled,
+    prepare: prepareAlarm,
+    setEnabled: setSoundEnabled,
+  } = useTimerAlarm()
 
   useEffect(() => {
     if (previousStatus.current !== state.status) {
-      setAnnouncement(t(`status.${state.status}`))
-
-      if (state.status === 'completed') {
-        playAlarm()
-      }
+      setAnnouncement(
+        state.status === 'idle' ? '' : t(`status.${state.status}`)
+      )
 
       previousStatus.current = state.status
     }
-  }, [playAlarm, state.status, t])
+  }, [state.status, t])
+
+  useEffect(() => {
+    if (
+      state.status === 'completed' &&
+      soundEnabled &&
+      (alarmAvailability === 'blocked' || alarmAvailability === 'unsupported')
+    ) {
+      setAnnouncement(`${t('status.completed')}。${t('soundUnavailable')}`)
+    }
+  }, [alarmAvailability, soundEnabled, state.status, t])
 
   useEffect(() => {
     if (state.status !== 'running' && state.status !== 'paused') {
@@ -61,7 +67,7 @@ export const Timer = memo(function Timer() {
         event.altKey ||
         event.ctrlKey ||
         event.metaKey ||
-        isInteractiveTarget(event.target)
+        isInteractiveEventTarget(event.target)
       ) {
         return
       }
@@ -89,19 +95,19 @@ export const Timer = memo(function Timer() {
   }
 
   return (
-    <div className="mx-auto grid max-w-4xl items-center gap-x-8 gap-y-4 lg:grid-cols-[minmax(16rem,0.9fr)_minmax(22rem,1.1fr)]">
-      <div className="text-center">
+    <div className="mx-auto grid w-full max-w-[56rem] items-center gap-x-[var(--layout-cluster-gap)] gap-y-[1rem] md:grid-cols-[minmax(14rem,0.382fr)_minmax(20rem,0.618fr)]">
+      <div className="min-w-0 text-center" data-timer-region="display">
         <TimerDisplay
           durationMs={state.durationMs}
           remainingMs={state.remainingMs}
           status={state.status}
         />
-        <p className="mt-2 text-sm text-foreground-muted">
-          {t(`status.${state.status}`)}
-        </p>
       </div>
 
-      <div className="mx-auto w-full max-w-xl text-center">
+      <div
+        className="mx-auto w-full min-w-0 max-w-xl text-center md:border-l md:border-border md:pl-[var(--layout-cluster-gap)]"
+        data-timer-region="controls"
+      >
         <DurationPicker
           durationMs={state.durationMs}
           disabled={state.status === 'running'}
@@ -114,20 +120,19 @@ export const Timer = memo(function Timer() {
           onPause={actions.pause}
           onReset={actions.reset}
         />
-        <button
-          type="button"
-          aria-pressed={soundEnabled}
-          onClick={() => setSoundEnabled((enabled) => !enabled)}
-          className="mt-3 min-h-[44px] touch-manipulation rounded-full px-4 text-xs text-foreground-muted transition-colors hover:bg-background-overlay hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
-        >
-          {soundEnabled ? t('soundOn') : t('soundOff')}
-        </button>
-        <p className="mt-1 text-xs text-foreground-muted">
-          {t('keyboardHint')}
-        </p>
-        <p className="mt-0.5 text-xs text-foreground-disabled">
-          {t('backgroundNotice')}
-        </p>
+        <div className="mt-[0.618rem] flex justify-center">
+          <SoundToggleButton
+            availability={alarmAvailability}
+            enabled={soundEnabled}
+            onToggle={() => {
+              const next = !soundEnabled
+              setSoundEnabled(next)
+              if (next) {
+                void prepareAlarm()
+              }
+            }}
+          />
+        </div>
       </div>
       <p className="sr-only" aria-live="polite" aria-atomic="true">
         {announcement}

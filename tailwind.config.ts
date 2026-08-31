@@ -19,6 +19,20 @@ const config: Config = {
         border: {
           DEFAULT: 'hsl(var(--color-border-default))',
         },
+        primary: {
+          DEFAULT: 'hsl(var(--color-primary))',
+          foreground: 'hsl(var(--color-primary-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--color-accent))',
+          foreground: 'hsl(var(--color-accent-foreground))',
+        },
+        ring: {
+          DEFAULT: 'hsl(var(--color-ring))',
+        },
+        status: {
+          running: 'hsl(var(--color-status-running))',
+        },
       },
       dropShadow: {
         glow: '0 0 1.618rem hsl(var(--color-shadow))',

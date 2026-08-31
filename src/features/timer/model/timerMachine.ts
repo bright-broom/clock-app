@@ -36,7 +36,7 @@ export type TimerAction =
 
 export const MAX_DURATION_MS = 24 * 60 * 60 * 1000
 
-export const DEFAULT_DURATION_MS = 5 * 60 * 1000
+export const DEFAULT_DURATION_MS = 15 * 60 * 1000
 
 /**
  * Normalizes a requested duration to whole seconds within the supported range.

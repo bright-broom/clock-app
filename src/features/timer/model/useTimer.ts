@@ -62,14 +62,6 @@ function getSourceId(): string {
   return sourceId
 }
 
-function isNewerRevision(candidate: StorageRevision): boolean {
-  return (
-    candidate.updatedAt > storageRevision.updatedAt ||
-    (candidate.updatedAt === storageRevision.updatedAt &&
-      candidate.sourceId > storageRevision.sourceId)
-  )
-}
-
 function parseStoredEnvelope(
   raw: unknown,
   now: number
@@ -178,7 +170,15 @@ function persist() {
 
   try {
     const localSourceId = getSourceId()
-    const updatedAt = Math.max(Date.now(), storageRevision.updatedAt + 1)
+    const persisted = parseStoredEnvelope(
+      parseJson(window.localStorage.getItem(STORAGE_KEY) ?? ''),
+      Date.now()
+    )
+    const updatedAt = Math.max(
+      Date.now(),
+      storageRevision.updatedAt + 1,
+      (persisted?.revision.updatedAt ?? 0) + 1
+    )
     const envelope: StoredTimerEnvelope = {
       version: STORAGE_VERSION,
       updatedAt,
@@ -237,12 +237,24 @@ function hydrate() {
 }
 
 function syncFromStorage(event: StorageEvent) {
-  if (event.key !== STORAGE_KEY || !event.newValue) {
+  if (event.key !== STORAGE_KEY || typeof window === 'undefined') {
     return
   }
 
-  const restored = parseStoredEnvelope(parseJson(event.newValue), Date.now())
-  if (!restored || !isNewerRevision(restored.revision)) {
+  let currentValue: string | null
+  try {
+    // The current storage value, rather than the queued event payload, is the
+    // source of truth. This makes every tab converge on the actual last write
+    // even when two commands used the same millisecond revision.
+    currentValue = window.localStorage.getItem(STORAGE_KEY)
+  } catch {
+    return
+  }
+
+  const restored = currentValue
+    ? parseStoredEnvelope(parseJson(currentValue), Date.now())
+    : null
+  if (!restored) {
     return
   }
 

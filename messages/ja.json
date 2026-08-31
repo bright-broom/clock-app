@@ -15,7 +15,6 @@
   "timer": {
     "label": "タイマー",
     "remainingLabel": "残り {hours} 時間 {minutes} 分 {seconds} 秒",
-    "duration": "時間を設定",
     "hours": "時",
     "minutes": "分",
     "seconds": "秒",
@@ -29,13 +28,24 @@
     "reset": "リセット",
     "soundOn": "完了音：オン",
     "soundOff": "完了音：オフ",
-    "keyboardHint": "Space：開始・一時停止 / R：リセット",
-    "backgroundNotice": "バックグラウンドでは完了音が遅れる場合があります",
+    "soundUnavailable": "完了音を再生できません",
     "status": {
-      "idle": "タイマーを設定しました",
       "running": "タイマーを開始しました",
       "paused": "タイマーを一時停止しました",
       "completed": "タイマーが終了しました"
+    }
+  },
+  "stopwatch": {
+    "label": "ストップウォッチ",
+    "elapsedLabel": "経過時間 {hours} 時間 {minutes} 分 {seconds}.{tenths} 秒",
+    "start": "開始",
+    "pause": "一時停止",
+    "resume": "再開",
+    "reset": "リセット",
+    "status": {
+      "idle": "ストップウォッチをリセットしました",
+      "running": "ストップウォッチを開始しました",
+      "paused": "ストップウォッチを一時停止しました"
     }
   },
   "date": {
@@ -57,6 +67,14 @@
       "hi": "ヒンディー語"
     }
   },
+  "colorThemeSwitcher": {
+    "label": "カラーテーマ",
+    "change": "カラーテーマ：{current}。{next}に変更",
+    "themes": {
+      "minimal": "モノクロ",
+      "corpit": "CorpIT"
+    }
+  },
   "menu": {
     "open": "メニューを開く",
     "close": "メニューを閉じる"
@@ -65,6 +83,7 @@
     "home": {
       "heading": "時刻ツール",
       "timer": "タイマー",
+      "stopwatch": "ストップウォッチ",
       "worldClock": "世界時計",
       "utcConverter": "UTC変換",
       "timeInCity": "東京の時刻"
@@ -88,6 +107,12 @@
       "title": "オンラインタイマー | カウントダウン",
       "heading": "タイマー",
       "description": "開始、一時停止、再開に対応したシンプルなカウントダウンタイマーです。",
+      "backToHome": "ホームへ戻る"
+    },
+    "stopwatch": {
+      "title": "オンラインストップウォッチ | 経過時間を計測",
+      "heading": "ストップウォッチ",
+      "description": "開始、一時停止、再開、リセットに対応したシンプルなオンラインストップウォッチです。",
       "backToHome": "ホームへ戻る"
     },
     "timeInCity": {

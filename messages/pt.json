@@ -15,7 +15,6 @@
   "timer": {
     "label": "Temporizador",
     "remainingLabel": "Restam {hours} horas {minutes} minutos {seconds} segundos",
-    "duration": "Definir duração",
     "hours": "Horas",
     "minutes": "Minutos",
     "seconds": "Segundos",
@@ -29,13 +28,24 @@
     "reset": "Redefinir",
     "soundOn": "Som de conclusão: ativado",
     "soundOff": "Som de conclusão: desativado",
-    "keyboardHint": "Espaço: iniciar ou pausar / R: redefinir",
-    "backgroundNotice": "O som de conclusão pode atrasar em segundo plano",
+    "soundUnavailable": "O som de conclusão não está disponível",
     "status": {
-      "idle": "O temporizador está pronto",
       "running": "Temporizador iniciado",
       "paused": "Temporizador pausado",
       "completed": "Temporizador concluído"
+    }
+  },
+  "stopwatch": {
+    "label": "Cronômetro",
+    "elapsedLabel": "Tempo decorrido: {hours} horas {minutes} minutos {seconds} segundos e {tenths} décimos",
+    "start": "Iniciar",
+    "pause": "Pausar",
+    "resume": "Retomar",
+    "reset": "Redefinir",
+    "status": {
+      "idle": "Cronômetro redefinido",
+      "running": "Cronômetro iniciado",
+      "paused": "Cronômetro pausado"
     }
   },
   "date": {
@@ -57,10 +67,19 @@
       "hi": "Hindi"
     }
   },
+  "colorThemeSwitcher": {
+    "label": "Tema de cores",
+    "change": "Tema de cores: {current}. Mudar para {next}",
+    "themes": {
+      "minimal": "Monocromático",
+      "corpit": "CorpIT"
+    }
+  },
   "seoPages": {
     "home": {
       "heading": "Ferramentas de tempo",
       "timer": "Temporizador",
+      "stopwatch": "Cronômetro",
       "worldClock": "Relógio mundial",
       "utcConverter": "Conversor UTC",
       "timeInCity": "Hora em Tóquio"
@@ -84,6 +103,12 @@
       "title": "Temporizador online | Contagem regressiva",
       "heading": "Temporizador",
       "description": "Um temporizador de contagem regressiva com controles para iniciar, pausar, retomar e redefinir.",
+      "backToHome": "Voltar ao início"
+    },
+    "stopwatch": {
+      "title": "Cronômetro online | Medir o tempo decorrido",
+      "heading": "Cronômetro",
+      "description": "Um cronômetro online com controles para iniciar, pausar, retomar e redefinir.",
       "backToHome": "Voltar ao início"
     },
     "timeInCity": {

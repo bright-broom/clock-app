@@ -28,6 +28,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority: 0.75,
     },
+    {
+      url: `${siteUrl}/${locale}/stopwatch`,
+      changeFrequency: 'monthly' as const,
+      priority: 0.75,
+    },
   ])
 
   const cityUrls = locales.flatMap((locale) =>

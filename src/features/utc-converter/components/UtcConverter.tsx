@@ -12,6 +12,11 @@ type Props = {
   locale: Locale
 }
 
+const RESULT_GRID_CLASS =
+  'mt-[1.618rem] grid gap-[0.618rem] sm:grid-cols-2 sm:gap-3'
+const RESULT_CARD_CLASS =
+  'rounded-xl border border-border bg-background-overlay p-3'
+
 export const UtcConverter = memo(function UtcConverter({ locale }: Props) {
   const t = useTranslations('seoPages.utcConverter')
   const [input, setInput] = useState('')
@@ -24,7 +29,10 @@ export const UtcConverter = memo(function UtcConverter({ locale }: Props) {
   const utcDate = useMemo(() => parseUtcInput(input), [input])
 
   return (
-    <div className="rounded-2xl border border-border bg-background p-5 sm:p-6">
+    <div
+      className="rounded-[var(--layout-card-radius)] border border-border bg-background p-[clamp(1rem,2.36vw,1.618rem)]"
+      aria-busy={!input && !touched}
+    >
       <label
         className="block text-xs uppercase tracking-wider text-foreground-muted"
         htmlFor="utc-input"
@@ -40,12 +48,12 @@ export const UtcConverter = memo(function UtcConverter({ locale }: Props) {
           setTouched(true)
         }}
         step={60}
-        className="mt-2 w-full rounded-lg border border-border bg-background-overlay px-3 py-2 text-foreground outline-none transition-colors focus:border-foreground-muted"
+        className="mt-2 min-h-[44px] w-full rounded-xl border border-border bg-background-overlay px-3 py-2 text-foreground outline-none transition-colors focus:border-foreground-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       />
       <p className="mt-2 text-xs text-foreground-muted">{t('utcHint')}</p>
 
       {utcDate ? (
-        <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+        <ul className={RESULT_GRID_CLASS}>
           {cityTimeZones.map((city) => {
             const formatted = formatDateTimeInZone(
               utcDate,
@@ -54,10 +62,7 @@ export const UtcConverter = memo(function UtcConverter({ locale }: Props) {
             )
 
             return (
-              <li
-                key={city.slug}
-                className="rounded-lg border border-border bg-background-overlay p-3"
-              >
+              <li key={city.slug} className={RESULT_CARD_CLASS}>
                 <p className="text-sm text-foreground">{city.names[locale]}</p>
                 <p className="mt-1 text-xs text-foreground-muted">
                   {city.timeZone}
@@ -68,6 +73,19 @@ export const UtcConverter = memo(function UtcConverter({ locale }: Props) {
               </li>
             )
           })}
+        </ul>
+      ) : !touched ? (
+        <ul className={RESULT_GRID_CLASS} aria-hidden="true">
+          {cityTimeZones.map((city) => (
+            <li
+              key={city.slug}
+              className={`${RESULT_CARD_CLASS} animate-pulse`}
+            >
+              <span className="block h-5 w-[38.2%] rounded-full bg-background-overlay-strong" />
+              <span className="mt-1 block h-4 w-[61.8%] rounded-full bg-background-overlay-strong" />
+              <span className="mt-2 block h-5 w-[76.4%] rounded-full bg-background-overlay-strong" />
+            </li>
+          ))}
         </ul>
       ) : touched ? (
         <p className="mt-4 text-sm text-foreground-muted">

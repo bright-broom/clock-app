@@ -29,12 +29,12 @@ export const TimerControls = memo(function TimerControls({
       : t('start')
 
   return (
-    <div className="mt-4 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-center sm:gap-3">
+    <div className="mx-auto mt-[0.618rem] grid w-full max-w-[22rem] grid-cols-[1.618fr_1fr] gap-2">
       <button
         type="button"
         onClick={isRunning ? onPause : onStart}
         disabled={!isRunning && !canStart}
-        className="min-h-[44px] w-full touch-manipulation rounded-full bg-foreground px-4 text-sm font-semibold text-background transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground disabled:cursor-not-allowed disabled:opacity-30 sm:w-auto sm:min-w-[8rem] sm:px-6"
+        className="min-h-[44px] w-full touch-manipulation rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-not-allowed disabled:opacity-30"
       >
         {primaryLabel}
       </button>
@@ -42,7 +42,7 @@ export const TimerControls = memo(function TimerControls({
         type="button"
         onClick={onReset}
         disabled={status === 'idle'}
-        className="min-h-[44px] w-full touch-manipulation rounded-full border border-border px-4 text-sm font-semibold text-foreground-muted transition-colors hover:bg-background-overlay-strong hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground disabled:cursor-not-allowed disabled:opacity-30 sm:w-auto sm:min-w-[8rem] sm:px-6"
+        className="min-h-[44px] w-full touch-manipulation rounded-full border border-border px-4 text-sm font-semibold text-foreground-muted transition-colors hover:bg-background-overlay-strong hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-not-allowed disabled:opacity-30"
       >
         {t('reset')}
       </button>

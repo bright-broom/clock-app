@@ -1,6 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl'
 import type { ReactNode } from 'react'
 
+import { ThemeProvider } from '@/components/theme/ThemeProvider'
 import { defaultLocale, type Locale } from '@/lib'
 
 import deMessages from '../../messages/de.json'
@@ -32,7 +33,7 @@ export function IntlWrapper({
 }: IntlWrapperProps) {
   return (
     <NextIntlClientProvider locale={locale} messages={messages[locale]}>
-      {children}
+      <ThemeProvider>{children}</ThemeProvider>
     </NextIntlClientProvider>
   )
 }

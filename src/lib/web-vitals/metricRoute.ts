@@ -3,6 +3,7 @@ import { isLocale } from '../i18n'
 export const metricRoutes = [
   'home',
   'timer',
+  'stopwatch',
   'world-clock',
   'utc-converter',
   'time-in-city',
@@ -30,6 +31,7 @@ export function toMetricRoute(pathname: string): MetricRoute {
 
   switch (segments[1]) {
     case 'timer':
+    case 'stopwatch':
     case 'world-clock':
     case 'utc-converter':
       return segments.length === 2 ? segments[1] : 'other'

@@ -54,9 +54,9 @@ describe('useTimer', () => {
 
     expect(result.current.state).toEqual({
       status: 'idle',
-      durationMs: 5 * 60 * 1000,
+      durationMs: 15 * 60 * 1000,
       endsAt: null,
-      remainingMs: 5 * 60 * 1000,
+      remainingMs: 15 * 60 * 1000,
     })
   })
 
@@ -367,21 +367,23 @@ describe('useTimer', () => {
 
     it('applies a newer countdown update from another tab', () => {
       const { result } = setupRunningTimer(60_000)
+      const remoteValue = JSON.stringify({
+        version: 2,
+        updatedAt: NOW + 100,
+        sourceId: 'remote-tab',
+        timer: {
+          status: 'paused',
+          durationMs: 120_000,
+          endsAt: 30_000,
+        },
+      })
+      window.localStorage.setItem(STORAGE_KEY, remoteValue)
 
       act(() => {
         window.dispatchEvent(
           new StorageEvent('storage', {
             key: STORAGE_KEY,
-            newValue: JSON.stringify({
-              version: 2,
-              updatedAt: NOW + 100,
-              sourceId: 'remote-tab',
-              timer: {
-                status: 'paused',
-                durationMs: 120_000,
-                endsAt: 30_000,
-              },
-            }),
+            newValue: remoteValue,
           })
         )
       })
@@ -395,6 +397,8 @@ describe('useTimer', () => {
 
     it('ignores an older update from another tab', () => {
       const { result } = setupRunningTimer(60_000)
+
+      const currentValue = window.localStorage.getItem(STORAGE_KEY)
 
       act(() => {
         window.dispatchEvent(
@@ -417,6 +421,46 @@ describe('useTimer', () => {
       expect(result.current.state).toMatchObject({
         status: 'running',
         durationMs: 60_000,
+      })
+      expect(window.localStorage.getItem(STORAGE_KEY)).toBe(currentValue)
+    })
+
+    it('converges on the actual last write when a stale event is delivered', () => {
+      const { result } = setupRunningTimer(60_000)
+      const lastWrite = {
+        version: 2,
+        updatedAt: NOW + 100,
+        sourceId: 'smaller-source-id',
+        timer: {
+          status: 'paused',
+          durationMs: 15 * 60_000,
+          endsAt: 42_000,
+        },
+      }
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(lastWrite))
+
+      act(() => {
+        window.dispatchEvent(
+          new StorageEvent('storage', {
+            key: STORAGE_KEY,
+            newValue: JSON.stringify({
+              version: 2,
+              updatedAt: NOW + 100,
+              sourceId: 'larger-source-id',
+              timer: {
+                status: 'idle',
+                durationMs: 1000,
+                endsAt: null,
+              },
+            }),
+          })
+        )
+      })
+
+      expect(result.current.state).toMatchObject({
+        status: 'paused',
+        durationMs: 15 * 60_000,
+        remainingMs: 42_000,
       })
     })
   })

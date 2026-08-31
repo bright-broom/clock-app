@@ -4,11 +4,18 @@ import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations } from 'next-intl/server'
 
+import {
+  COLOR_THEME_BOOTSTRAP_SCRIPT,
+  DEFAULT_COLOR_THEME,
+} from '@/components/theme/model/colorTheme'
+import { ThemeProvider } from '@/components/theme/ThemeProvider'
+import { TimerRuntime } from '@/features/timer'
 import { isLocale, locales, type Locale } from '@/lib'
 import { createLocalizedAlternates } from '@/lib/seo'
 import { getSiteUrl } from '@/lib/site'
 import { WebVitals } from '@/lib/web-vitals'
 
+import '@/components/theme/theme.css'
 import '../globals.css'
 
 const inter = Inter({
@@ -129,11 +136,24 @@ export default async function RootLayout({ children, params }: Props) {
   const messages = await getMessages()
 
   return (
-    <html lang={locale} className={inter.variable}>
+    <html
+      lang={locale}
+      className={inter.variable}
+      data-color-theme={DEFAULT_COLOR_THEME}
+      suppressHydrationWarning
+    >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{ __html: COLOR_THEME_BOOTSTRAP_SCRIPT }}
+        />
+      </head>
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
-          <WebVitals />
-          {children}
+          <ThemeProvider>
+            <TimerRuntime />
+            <WebVitals />
+            {children}
+          </ThemeProvider>
         </NextIntlClientProvider>
       </body>
     </html>

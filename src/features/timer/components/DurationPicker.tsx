@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { memo, useEffect, useRef, useState } from 'react'
 
-const PRESET_MINUTES = [1, 5, 10, 25] as const
+const PRESET_MINUTES = [1, 5, 15] as const
 const DURATION_FIELDS = ['hours', 'minutes', 'seconds'] as const
 const MAX_FIELD_VALUE = {
   hours: 24,
@@ -86,14 +86,14 @@ const DurationFieldInput = memo(function DurationFieldInput({
   }
 
   return (
-    <div className="min-w-0 text-center">
+    <div className="min-w-0 pt-2 text-center">
       <label
         htmlFor={`timer-duration-${field}`}
         className="text-xs text-foreground-muted"
       >
         {label}
       </label>
-      <div className="mt-1.5 grid grid-cols-[minmax(0,1fr)_2.8125rem] overflow-hidden rounded-xl border border-border bg-background-overlay transition-colors focus-within:border-foreground-muted">
+      <div className="mt-1 grid grid-cols-[minmax(0,1fr)_2.8125rem] overflow-hidden transition-colors focus-within:bg-background-overlay-strong focus-within:ring-1 focus-within:ring-inset focus-within:ring-ring">
         <input
           id={`timer-duration-${field}`}
           type="number"
@@ -147,7 +147,7 @@ const DurationFieldInput = memo(function DurationFieldInput({
             disabled={disabled || value >= MAX_FIELD_VALUE[field]}
             aria-label={t('increaseField', { field: label })}
             onClick={() => commit(value + 1)}
-            className="focus-visible:outline-inset grid min-h-[44px] touch-manipulation place-items-center text-foreground-muted transition-colors hover:bg-background-overlay-strong hover:text-foreground focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground disabled:cursor-not-allowed disabled:opacity-25"
+            className="focus-visible:outline-inset grid min-h-[44px] touch-manipulation place-items-center text-foreground-muted transition-colors hover:bg-background-overlay-strong hover:text-foreground focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring disabled:cursor-not-allowed disabled:opacity-25"
           >
             <StepArrow direction="up" />
           </button>
@@ -156,7 +156,7 @@ const DurationFieldInput = memo(function DurationFieldInput({
             disabled={disabled || value <= 0}
             aria-label={t('decreaseField', { field: label })}
             onClick={() => commit(value - 1)}
-            className="focus-visible:outline-inset grid min-h-[44px] touch-manipulation place-items-center border-t border-border text-foreground-muted transition-colors hover:bg-background-overlay-strong hover:text-foreground focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground disabled:cursor-not-allowed disabled:opacity-25"
+            className="focus-visible:outline-inset grid min-h-[44px] touch-manipulation place-items-center border-t border-border text-foreground-muted transition-colors hover:bg-background-overlay-strong hover:text-foreground focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring disabled:cursor-not-allowed disabled:opacity-25"
           >
             <StepArrow direction="down" />
           </button>
@@ -182,12 +182,8 @@ export const DurationPicker = memo(function DurationPicker({
   }
 
   return (
-    <fieldset disabled={disabled} className="w-full">
-      <legend className="text-center text-xs font-medium uppercase tracking-[0.2em] text-foreground-muted">
-        {t('duration')}
-      </legend>
-
-      <div className="mt-3 grid grid-cols-3 gap-2 sm:gap-3">
+    <fieldset disabled={disabled} className="w-full" aria-label={t('label')}>
+      <div className="grid grid-cols-3 divide-x divide-border overflow-hidden rounded-[var(--layout-card-radius)] border border-border bg-background-overlay">
         {DURATION_FIELDS.map((field) => (
           <DurationFieldInput
             key={field}
@@ -201,7 +197,7 @@ export const DurationPicker = memo(function DurationPicker({
       </div>
 
       <div
-        className="mt-3 flex flex-wrap justify-center gap-2"
+        className="mt-[0.618rem] grid grid-cols-3 gap-[0.382rem]"
         role="group"
         aria-label={t('presets')}
       >
@@ -215,10 +211,10 @@ export const DurationPicker = memo(function DurationPicker({
               type="button"
               onClick={() => onChange(presetMs)}
               aria-pressed={selected}
-              className={`min-h-[44px] touch-manipulation rounded-full border px-4 text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground disabled:cursor-not-allowed disabled:opacity-50 ${
+              className={`min-h-[44px] touch-manipulation whitespace-nowrap rounded-full border px-2 text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm ${
                 selected
-                  ? 'border-foreground bg-foreground text-background'
-                  : 'border-border text-foreground-muted hover:bg-background-overlay-strong hover:text-foreground'
+                  ? 'border-primary bg-primary text-primary-foreground'
+                  : 'border-transparent bg-background-overlay text-foreground-muted hover:bg-background-overlay-strong hover:text-foreground'
               }`}
             >
               {t('presetLabel', { minutes })}

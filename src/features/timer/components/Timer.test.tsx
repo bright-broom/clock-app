@@ -1,24 +1,45 @@
-import { act, fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { IntlWrapper } from '@/test'
 
 import { __resetTimerStore } from '../model/useTimer'
+import { __resetTimerAlarmStore } from '../model/useTimerAlarm'
 
 import { Timer } from './Timer'
 
 describe('Timer', () => {
+  const originalAudioContext = Object.getOwnPropertyDescriptor(
+    window,
+    'AudioContext'
+  )
+
   beforeEach(() => {
     __resetTimerStore()
+    __resetTimerAlarmStore()
     window.localStorage.clear()
     vi.useFakeTimers()
     vi.setSystemTime(new Date('2024-01-15T01:30:45.000Z'))
+    Object.defineProperty(window, 'AudioContext', {
+      configurable: true,
+      value: class {
+        state: AudioContextState = 'running'
+        close = vi.fn(() => Promise.resolve())
+        resume = vi.fn(() => Promise.resolve())
+      },
+    })
   })
 
   afterEach(() => {
     __resetTimerStore()
+    __resetTimerAlarmStore()
     window.localStorage.clear()
     vi.useRealTimers()
+    if (originalAudioContext) {
+      Object.defineProperty(window, 'AudioContext', originalAudioContext)
+    } else {
+      Reflect.deleteProperty(window, 'AudioContext')
+    }
   })
 
   function renderTimer() {
@@ -34,13 +55,28 @@ describe('Timer', () => {
 
     expect(screen.getByRole('timer')).toHaveAttribute(
       'aria-label',
-      '残り 00 時間 05 分 00 秒'
+      '残り 00 時間 15 分 00 秒'
     )
     expect(screen.getByRole('button', { name: '開始' })).toBeEnabled()
     expect(screen.getByRole('button', { name: 'リセット' })).toBeDisabled()
+    const soundButton = screen.getByRole('button', { name: '完了音：オン' })
+    expect(soundButton).toHaveAttribute('aria-pressed', 'true')
+    expect(soundButton).toHaveAttribute('data-availability', 'unprepared')
+    expect(screen.queryByText('時間を設定')).not.toBeInTheDocument()
+    expect(screen.queryByText('タイマーを設定しました')).not.toBeInTheDocument()
+  })
+
+  it('toggles the completion sound from a dedicated button', () => {
+    renderTimer()
+
+    const soundButton = screen.getByRole('button', { name: '完了音：オン' })
+    expect(soundButton).toHaveAttribute('data-state', 'on')
+
+    fireEvent.click(soundButton)
+
     expect(
-      screen.getByRole('button', { name: '完了音：オン' })
-    ).toHaveAttribute('aria-pressed', 'true')
+      screen.getByRole('button', { name: '完了音：オフ' })
+    ).toHaveAttribute('data-state', 'off')
   })
 
   it('applies a preset and counts down without drift', () => {
@@ -84,19 +120,28 @@ describe('Timer', () => {
   it('provides large step controls and keeps presets available', () => {
     renderTimer()
 
-    expect(screen.getByRole('button', { name: '5 分' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: '15 分' })).toHaveAttribute(
       'aria-pressed',
       'true'
     )
     fireEvent.click(screen.getByRole('button', { name: '分を増やす' }))
-    expect(screen.getByLabelText('分')).toHaveValue(6)
+    expect(screen.getByLabelText('分')).toHaveValue(16)
 
     fireEvent.click(screen.getByRole('button', { name: '分を減らす' }))
-    expect(screen.getByLabelText('分')).toHaveValue(5)
+    expect(screen.getByLabelText('分')).toHaveValue(15)
 
-    fireEvent.click(screen.getByRole('button', { name: '10 分' }))
-    expect(screen.getByLabelText('分')).toHaveValue(10)
-    expect(screen.getByRole('button', { name: '10 分' })).toHaveAttribute(
+    const presetButtons = within(
+      screen.getByRole('group', { name: 'プリセット' })
+    ).getAllByRole('button')
+    expect(presetButtons.map((button) => button.textContent)).toEqual([
+      '1 分',
+      '5 分',
+      '15 分',
+    ])
+
+    fireEvent.click(screen.getByRole('button', { name: '15 分' }))
+    expect(screen.getByLabelText('分')).toHaveValue(15)
+    expect(screen.getByRole('button', { name: '15 分' })).toHaveAttribute(
       'aria-pressed',
       'true'
     )
@@ -108,7 +153,7 @@ describe('Timer', () => {
 
     expect(screen.getByLabelText('分')).toBeDisabled()
     expect(screen.getByRole('button', { name: '分を増やす' })).toBeDisabled()
-    expect(screen.getByRole('button', { name: '10 分' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: '15 分' })).toBeDisabled()
   })
 
   it('pauses, resumes, and resets', () => {
@@ -126,7 +171,7 @@ describe('Timer', () => {
     fireEvent.click(screen.getByRole('button', { name: 'リセット' }))
     expect(screen.getByRole('timer')).toHaveAttribute(
       'aria-label',
-      '残り 00 時間 05 分 00 秒'
+      '残り 00 時間 15 分 00 秒'
     )
   })
 
